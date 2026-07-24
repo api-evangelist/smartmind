@@ -1,0 +1,286 @@
+openapi: 3.0.2
+info:
+  title: THANOSQL api file API
+  description: THANOSQL TEST API documentation
+  version: '1.0'
+tags:
+- name: file
+paths:
+  /fm/api/v1/contents/{path}:
+    get:
+      tags:
+      - file
+      summary: Get
+      description: "Retrieves file/directory information or downloads a file.\n\nPath parameter\n--------------\n- path: the path to the file/directory relative to the user data root\n        (default value is \"/\", the user data root directory itself)\n\nQuery parameters\n----------------\n- option: controls the behavior of the API\n    - default (None): retrieves file/directory information\n        Returns a Content Pydantic object containing information on the target path\n    - \"download\": downloads a file (directory download is not possible)\n        Streams the file content or does the download and returns nothing,\n        depending on the client request"
+      operationId: get_fm_api_v1_contents__path__get
+      parameters:
+      - required: true
+        schema:
+          title: Path
+          type: string
+        name: path
+        in: path
+      - required: false
+        schema:
+          title: Option
+          type: string
+        name: option
+        in: query
+      - required: false
+        schema:
+          title: Show Hidden Files
+          type: boolean
+          default: true
+        name: show_hidden_files
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+    delete:
+      tags:
+      - file
+      summary: Delete
+      description: "Deletes a file or directory permanently.\n\nPath parameter\n--------------\n- path: the path to the file/directory to be deleted\n        relative to the user data root (no default value)\n\nReturn\n------\nNo content (nothing is returned)"
+      operationId: delete_fm_api_v1_contents__path__delete
+      parameters:
+      - required: true
+        schema:
+          title: Path
+          type: string
+        name: path
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+  /fm/api/v1/contents/{destination}:
+    post:
+      tags:
+      - file
+      summary: Create
+      description: "Uploads a file or creates an empty folder.\n\nPath parameter\n--------------\n- destination: the destination path of the upload/folder creation relative to the user data root.\n        destination should point to a (would-be) directory, otherwise NotADirectoryError will occur.\n        (default value is \"/\", the user data root directory itself)\n\nAdditional input\n----------------\n- file: the file to be uploaded (optional)\n    - if a file is attached, uploads the file to the destination path\n        Returns a Content Pydantic object containing\n        information on the file uploaded\n    - if no file is attached, creates an empty folder following the destination path\n        Returns a Content Pydantic object containing\n        information on the newly-created folder"
+      operationId: create_fm_api_v1_contents__destination__post
+      parameters:
+      - required: true
+        schema:
+          title: Destination
+          type: string
+        name: destination
+        in: path
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_create_fm_api_v1_contents__destination__post'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+  /fm/api/v1/contents/{source}:
+    patch:
+      tags:
+      - file
+      summary: Move
+      description: "Moves, renames, or copies a file or directory.\n\nPath parameter\n--------------\n- source: the path to the file/directory to be moved/renamed/copied\n        relative to the user data root (no default value)\n\nQuery parameters\n----------------\n- destination: the path to the destination file/directory (no default value)\n- option: controls the behavior of the API\n    - default (None): moves or renames a file or directory. If the same\n        file/directory already exists in the destination, the API behavior\n        follows the behavior of Linux file systems.\n        Returns a Content Pydantic object containing information on the\n        destination file/directory\n    - \"copy\": copies a file or directory. destination should be a directory.\n        If the same file/directory already exists in the destination, the\n        copied file/directory will be automatically renamed.\n        Returns a Content Pydantic object containing information on the\n        destination file/directory"
+      operationId: move_fm_api_v1_contents__source__patch
+      parameters:
+      - required: true
+        schema:
+          title: Source
+          type: string
+        name: source
+        in: path
+      - required: true
+        schema:
+          title: Destination
+          type: string
+        name: destination
+        in: query
+      - required: false
+        schema:
+          title: Option
+          type: string
+        name: option
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+  /fm/api/v1/size/:
+    get:
+      tags:
+      - file
+      summary: Get Size
+      operationId: get_size_fm_api_v1_size__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Size'
+      security:
+      - Bearer Auth: []
+components:
+  schemas:
+    Content:
+      title: Content
+      type: object
+      properties:
+        content_info:
+          title: Content Info
+          allOf:
+          - $ref: '#/components/schemas/ContentInfo'
+          default:
+            name: ''
+            path: ''
+            type: file
+            writable: true
+            created_at: '0001-01-01T00:00:00'
+            updated_at: '0001-01-01T00:00:00'
+        root:
+          title: Root
+          type: string
+          default: /home/jovyan
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    Body_create_fm_api_v1_contents__destination__post:
+      title: Body_create_fm_api_v1_contents__destination__post
+      type: object
+      properties:
+        file:
+          title: File
+          type: string
+          format: binary
+    Size:
+      title: Size
+      type: object
+      properties:
+        max_size:
+          title: Max Size
+          type: integer
+          default: 0
+        used_size:
+          title: Used Size
+          type: integer
+          default: 0
+        avail_size:
+          title: Avail Size
+          type: integer
+          default: 0
+    ContentInfo:
+      title: ContentInfo
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        format:
+          title: Format
+          type: string
+        path:
+          title: Path
+          type: string
+          default: ''
+        type:
+          title: Type
+          type: string
+          default: file
+        size:
+          title: Size
+          type: integer
+        writable:
+          title: Writable
+          type: boolean
+          default: true
+        content:
+          title: Content
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+          default: '0001-01-01T00:00:00'
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+          default: '0001-01-01T00:00:00'
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+  securitySchemes:
+    Bearer Auth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Enter: **''Bearer &lt;JWT&gt;''**, where JWT is the access token. Example: Bearer access_token_comes_here'

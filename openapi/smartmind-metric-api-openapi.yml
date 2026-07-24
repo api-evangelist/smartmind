@@ -1,0 +1,44 @@
+openapi: 3.0.2
+info:
+  title: THANOSQL api file metric API
+  description: THANOSQL TEST API documentation
+  version: '1.0'
+tags:
+- name: metric
+paths:
+  /api/v1/metric/memory/:
+    get:
+      tags:
+      - metric
+      summary: Get Memory Metrics
+      operationId: get_memory_metrics_api_v1_metric_memory__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryMetric'
+      security:
+      - Bearer Auth: []
+components:
+  schemas:
+    MemoryMetric:
+      title: MemoryMetric
+      type: object
+      properties:
+        gpus:
+          title: Gpus
+          type: array
+          items: {}
+          default: []
+        ram:
+          title: Ram
+          type: object
+          default: {}
+  securitySchemes:
+    Bearer Auth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Enter: **''Bearer &lt;JWT&gt;''**, where JWT is the access token. Example: Bearer access_token_comes_here'

@@ -1,0 +1,396 @@
+openapi: 3.0.2
+info:
+  title: THANOSQL api file table_template API
+  description: THANOSQL TEST API documentation
+  version: '1.0'
+tags:
+- name: table_template
+paths:
+  /api/v1/table_template/:
+    get:
+      tags:
+      - table_template
+      summary: Get All Table Templates
+      description: "Retrieves all available table templates\n\nParameters\n----------\n- search: str, default: empty\n    Substring to look for in table template titles\n- order_by: str, default: \"recent\"\n    How the query results should be ordered, there are three possible values:\n    - recent: based on the date of creation, from most recent to oldest\n    - name_asc: based on the name of the table template, from A to Z\n    - name_desc: based on the name of the table template, from Z to A\n- latest: bool, default: False\n    If set to True, returns all of the latest table templates\n\nReturns\n-------\nA TableTemplates Pydantic object containing the table template objects."
+      operationId: get_all_table_templates_api_v1_table_template__get
+      parameters:
+      - required: false
+        schema:
+          title: Search
+          type: string
+          default: ''
+        name: search
+        in: query
+      - required: false
+        schema:
+          title: Order By
+          type: string
+          default: recent
+        name: order_by
+        in: query
+      - required: false
+        schema:
+          title: Latest
+          type: boolean
+          default: false
+        name: latest
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableTemplatesResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+  /api/v1/table_template/{table_template_name}:
+    get:
+      tags:
+      - table_template
+      summary: Get Table Template
+      description: "Retrieves table template(s) by name. User may choose to request only the\nlatest table template or a template with a certain version.\n\nParameters\n----------\n- table_template_name: the name of the table template\n- version: the version of the table template that the user wants to get\n    User can fill in 'latest' if they want to retrieve the latest version of the table template\n    User can leave the version parameter blank if they want to get all versions of the table template\n\nReturns\n-------\nA TableTemplates Pydantic object containing the table template objects."
+      operationId: get_table_template_api_v1_table_template__table_template_name__get
+      parameters:
+      - required: true
+        schema:
+          title: Table Template Name
+          type: string
+        name: table_template_name
+        in: path
+      - required: false
+        schema:
+          title: Version
+          type: string
+          default: ''
+        name: version
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableTemplatesWithVersionsResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+    post:
+      tags:
+      - table_template
+      summary: Create Table Template
+      description: 'Creates table template from an input and saves it into
+
+        schema registry (table_template table in user database).
+
+
+        Parameters
+
+        ----------
+
+        - table_template_name: the name of the table template
+
+        - body: the body of the request, consisting of the table template body
+
+
+        Returns
+
+        -------
+
+        A TableTemplate Pydantic object.'
+      operationId: create_table_template_api_v1_table_template__table_template_name__post
+      parameters:
+      - required: true
+        schema:
+          title: Table Template Name
+          type: string
+        name: table_template_name
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTableTemplateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableTemplateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+    delete:
+      tags:
+      - table_template
+      summary: Delete Table Template
+      description: "Deletes table template of a certain name and version from the database.\n\nParameters\n----------\n- table_template_name: the name of the table template\n- version: the version of the table template that the user wants to delete\n    User can leave the version parameter blank if they want to delete all versions of the table template\n\nReturns\n-------\nA TableTemplateMessage Pydantic object containing a\nsuccess message and the table template name."
+      operationId: delete_table_template_api_v1_table_template__table_template_name__delete
+      parameters:
+      - required: true
+        schema:
+          title: Table Template Name
+          type: string
+        name: table_template_name
+        in: path
+      - required: false
+        schema:
+          title: Version
+          type: string
+        name: version
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableTemplateMessageResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+components:
+  schemas:
+    TableTemplateResponse:
+      title: TableTemplateResponse
+      required:
+      - table_template
+      type: object
+      properties:
+        table_template:
+          $ref: '#/components/schemas/TableTemplate'
+    BaseColumn:
+      title: BaseColumn
+      required:
+      - type
+      - name
+      type: object
+      properties:
+        default:
+          title: Default
+          type: string
+        is_nullable:
+          title: Is Nullable
+          type: boolean
+          default: true
+        type:
+          title: Type
+          type: string
+        name:
+          title: Name
+          type: string
+    ForeignKey:
+      title: ForeignKey
+      required:
+      - reference_column
+      - reference_table
+      - column
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        reference_schema:
+          title: Reference Schema
+          type: string
+          default: public
+        reference_column:
+          title: Reference Column
+          type: string
+        reference_table:
+          title: Reference Table
+          type: string
+        column:
+          title: Column
+          type: string
+    Unique:
+      title: Unique
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        columns:
+          title: Columns
+          type: array
+          items:
+            type: string
+          default: []
+    CreateTableTemplateRequest:
+      title: CreateTableTemplateRequest
+      required:
+      - table_template
+      type: object
+      properties:
+        table_template:
+          $ref: '#/components/schemas/BaseTableObjects'
+        version:
+          title: Version
+          type: string
+        compatibility:
+          title: Compatibility
+          type: string
+    TableTemplateMessageResponse:
+      title: TableTemplateMessageResponse
+      required:
+      - message
+      - table_template_name
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        table_template_name:
+          title: Table Template Name
+          type: string
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    TableTemplatesResponse:
+      title: TableTemplatesResponse
+      required:
+      - table_templates
+      type: object
+      properties:
+        table_templates:
+          title: Table Templates
+          type: array
+          items:
+            $ref: '#/components/schemas/TableTemplate'
+    PrimaryKey:
+      title: PrimaryKey
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        columns:
+          title: Columns
+          type: array
+          items:
+            type: string
+          default: []
+    Constraints:
+      title: Constraints
+      type: object
+      properties:
+        unique:
+          title: Unique
+          type: array
+          items:
+            $ref: '#/components/schemas/Unique'
+        primary_key:
+          $ref: '#/components/schemas/PrimaryKey'
+        foreign_keys:
+          title: Foreign Keys
+          type: array
+          items:
+            $ref: '#/components/schemas/ForeignKey'
+    TableTemplatesWithVersionsResponse:
+      title: TableTemplatesWithVersionsResponse
+      required:
+      - table_templates
+      - versions
+      type: object
+      properties:
+        table_templates:
+          title: Table Templates
+          type: array
+          items:
+            $ref: '#/components/schemas/TableTemplate'
+        versions:
+          title: Versions
+          type: array
+          items:
+            type: string
+    TableTemplate:
+      title: TableTemplate
+      required:
+      - name
+      - table_template
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        table_template:
+          $ref: '#/components/schemas/BaseTableObjects'
+        version:
+          title: Version
+          type: string
+        compatibility:
+          title: Compatibility
+          type: string
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+    BaseTableObjects:
+      title: BaseTableObjects
+      type: object
+      properties:
+        columns:
+          title: Columns
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseColumn'
+        constraints:
+          $ref: '#/components/schemas/Constraints'
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+  securitySchemes:
+    Bearer Auth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Enter: **''Bearer &lt;JWT&gt;''**, where JWT is the access token. Example: Bearer access_token_comes_here'

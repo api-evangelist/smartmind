@@ -1,0 +1,29 @@
+openapi: 3.0.2
+info:
+  title: THANOSQL api file health API
+  description: THANOSQL TEST API documentation
+  version: '1.0'
+tags:
+- name: health
+paths:
+  /api/v1/healthz:
+    get:
+      tags:
+      - health
+      summary: Get Db Health
+      operationId: get_db_health_api_v1_healthz_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - Bearer Auth: []
+components:
+  securitySchemes:
+    Bearer Auth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Enter: **''Bearer &lt;JWT&gt;''**, where JWT is the access token. Example: Bearer access_token_comes_here'

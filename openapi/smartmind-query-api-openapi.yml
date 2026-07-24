@@ -1,0 +1,577 @@
+openapi: 3.0.2
+info:
+  title: THANOSQL api file query API
+  description: THANOSQL TEST API documentation
+  version: '1.0'
+tags:
+- name: query
+paths:
+  /api/v1/query/:
+    post:
+      tags:
+      - query
+      summary: Post Query
+      description: 'Executes queries using either a query string or a query template.
+
+
+        <Note>The `query_string` field holds direct queries or templates that can
+
+        be modified with specified parameters. You can also recall saved query
+
+        templates by their `template_id` or `template_name`. These templates, regardless
+
+        of how they are called, can be used with or without parameters.</Note>'
+      operationId: post_query_api_v1_query__post
+      parameters:
+      - description: The schema to save the created table to. If no parameter is provided, defaults to "qm" if table_name is also not specified, and "public" otherwise.
+        required: false
+        schema:
+          title: Schema
+          type: string
+          description: The schema to save the created table to. If no parameter is provided, defaults to "qm" if table_name is also not specified, and "public" otherwise.
+        name: schema
+        in: query
+      - description: The name that will be used to create the table produced by the query execution, if any. If not provided, defaults to a randomly generated name.
+        required: false
+        schema:
+          title: Table Name
+          type: string
+          description: The name that will be used to create the table produced by the query execution, if any. If not provided, defaults to a randomly generated name.
+        name: table_name
+        in: query
+      - description: Determines if the table shall be overwritten or not if it already exists.
+        required: false
+        schema:
+          title: Overwrite
+          type: boolean
+          description: Determines if the table shall be overwritten or not if it already exists.
+          default: false
+        name: overwrite
+        in: query
+      - description: 'Specifies the maximum number of records that should be returned in the result set (max: 100).'
+        required: false
+        schema:
+          title: Max Results
+          type: integer
+          description: 'Specifies the maximum number of records that should be returned in the result set (max: 100).'
+          default: 0
+        name: max_results
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryContext'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryLogResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+  /api/v1/query/log:
+    get:
+      tags:
+      - query
+      summary: Get Query Logs
+      description: "Returns a list of Query Logs and the total number/count of Query Logs. This endpoint is paginated.\n\nRequest\n----------\n__Request Parameters__\n\n    - offset: int, default 0\n        The offset to where the pagination count will start from.\n    - limit: int, default 0\n        The number of items to retrieve starting from the offset.\n        Max value is 100.\n\nResponse\n-------\n__QueryLogReponse__\n\n    - query_logs: List[QueryLog]\n        A list of QueryLogs.\n    - total: int\n        Total number of QueryLogs in the database."
+      operationId: get_query_logs_api_v1_query_log_get
+      parameters:
+      - required: false
+        schema:
+          title: Search
+          type: string
+          default: ''
+        name: search
+        in: query
+      - required: false
+        schema:
+          title: Offset
+          type: integer
+          default: 0
+        name: offset
+        in: query
+      - required: false
+        schema:
+          title: Limit
+          type: integer
+          default: 100
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedQueryLogResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+  /api/v1/query/template:
+    get:
+      tags:
+      - query
+      summary: Get Templates
+      description: "Gets the paginated list of all the query templates.\nThe API can only return 100 tables at a time,\nstarting from the offset number specified.\n\nParameters\n----------\n- offset: int, default 0\n    The offset position of where to select the templates from.\n- limit: int, default 100\n    The number of templates to retrieve. This value must range from 0 and 100.\n- search: str, default empty\n    Substring to look for in query template names\n- order_by: str, default \"recent\"\n    How the query template results should be ordered, there are three possible values:\n    - recent: based on the date of creation, from most recent to oldest\n    - name_asc: based on the name of the template, from A to Z\n    - name_desc: based on the name of the template, from Z to A\n\nReturns\n-------\nA QueryTemplates Pydantic object containing a List of QueryTemplate objects."
+      operationId: get_templates_api_v1_query_template_get
+      parameters:
+      - required: false
+        schema:
+          title: Offset
+          type: integer
+          default: 0
+        name: offset
+        in: query
+      - required: false
+        schema:
+          title: Limit
+          type: integer
+          default: 100
+        name: limit
+        in: query
+      - required: false
+        schema:
+          title: Search
+          type: string
+          default: ''
+        name: search
+        in: query
+      - required: false
+        schema:
+          title: Order By
+          type: string
+          default: recent
+        name: order_by
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryTemplatesResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+    post:
+      tags:
+      - query
+      summary: Create Template
+      description: "Creates a new query template with a certain name and query string.\n\nParameters\n----------\n- body: CreateQueryTemplateRequest\n    The body of the template creation request, consisting of the template name and query string.\n\nReturns\n-------\nA QueryTemplate Pydantic object containing the recently created query template object."
+      operationId: create_template_api_v1_query_template_post
+      parameters:
+      - required: false
+        schema:
+          title: Dry Run
+          type: boolean
+          default: false
+        name: dry_run
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateQueryTemplateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryTemplateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+  /api/v1/query/template/{template_name}:
+    get:
+      tags:
+      - query
+      summary: Get Template
+      description: "Gets the query template object with the specified template_name.\n\nParameters\n----------\n- template_name: str\n    The name of the template user wants to get.\n\nReturns\n-------\nA QueryTemplate Pydantic object containing the target query template."
+      operationId: get_template_api_v1_query_template__template_name__get
+      parameters:
+      - required: true
+        schema:
+          title: Template Name
+          type: string
+        name: template_name
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryTemplateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+    put:
+      tags:
+      - query
+      summary: Update Template
+      description: "Updates the query template with the specified template_name.\n\nParameters\n----------\n- template_name: str\n    The name of the template user wants to update.\n- body: UpdateQueryTemplateRequest\n    The body of the template creation request, consisting of the template name and query string.\n\nReturns\n-------\nA QueryTemplate Pydantic object containing the target query template."
+      operationId: update_template_api_v1_query_template__template_name__put
+      parameters:
+      - required: true
+        schema:
+          title: Template Name
+          type: string
+        name: template_name
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateQueryTemplateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryTemplateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+    delete:
+      tags:
+      - query
+      summary: Delete Template
+      description: "Deletes the query template with the specified template_name.\n\nParameters\n----------\n- template_name: str\n    The name of the template user wants to update.\n\nReturns\n-------\nA QueryTemplateMessage Pydantic object containing a success message."
+      operationId: delete_template_api_v1_query_template__template_name__delete
+      parameters:
+      - required: true
+        schema:
+          title: Template Name
+          type: string
+        name: template_name
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryTemplateMessageResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - Bearer Auth: []
+components:
+  schemas:
+    QueryTemplateMessageResponse:
+      title: QueryTemplateMessageResponse
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+    PaginatedQueryLogResponse:
+      title: PaginatedQueryLogResponse
+      required:
+      - query_logs
+      - total
+      type: object
+      properties:
+        query_logs:
+          title: Query Logs
+          type: array
+          items:
+            $ref: '#/components/schemas/QueryLog'
+        total:
+          title: Total
+          type: integer
+    QueryTemplate:
+      title: QueryTemplate
+      required:
+      - name
+      - query
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        query:
+          title: Query
+          type: string
+        parameters:
+          title: Parameters
+          type: array
+          items:
+            type: string
+          default: []
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+    QueryTemplateResponse:
+      title: QueryTemplateResponse
+      required:
+      - query_template
+      type: object
+      properties:
+        query_template:
+          $ref: '#/components/schemas/QueryTemplate'
+    QueryLog:
+      title: QueryLog
+      type: object
+      properties:
+        query_id:
+          title: Query Id
+          type: string
+          description: A unique ID that identifies the query.
+        statement_type:
+          title: Statement Type
+          type: string
+          description: The query type (ex. SELECT, DELETE, etc).
+        start_time:
+          title: Start Time
+          type: string
+          description: The start time of the query execution.
+          format: date-time
+        end_time:
+          title: End Time
+          type: string
+          description: The end time of the query execution.
+          format: date-time
+        query:
+          title: Query
+          type: string
+          description: The query string that was executed.
+          default: ''
+        referer:
+          title: Referer
+          type: string
+          description: Indicates where the REST API call was made from.
+          default: ''
+        state:
+          title: State
+          type: string
+          description: Shows the state of the query execution (either RUNNING or COMPLETE).
+        destination_table_name:
+          title: Destination Table Name
+          type: string
+          description: Shows the table where the results are stored in (If the statement_type is a SELECT, a new destination_table is created. Otherwise, the destination_table_name shows the affected table).
+        destination_schema:
+          title: Destination Schema
+          type: string
+          description: Shows in which schema the destination_table is stored in.
+        error_result:
+          title: Error Result
+          type: string
+          description: Stores the error message if there was an error while executing the query.
+        created_at:
+          title: Created At
+          type: string
+          description: Shows the timestamp of when the query log was created.
+          format: date-time
+    UpdateQueryTemplateRequest:
+      title: UpdateQueryTemplateRequest
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        query:
+          title: Query
+          type: string
+    CreateQueryTemplateRequest:
+      title: CreateQueryTemplateRequest
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        query:
+          title: Query
+          type: string
+          default: ''
+    QueryTemplatesResponse:
+      title: QueryTemplatesResponse
+      required:
+      - query_templates
+      type: object
+      properties:
+        query_templates:
+          title: Query Templates
+          type: array
+          items:
+            $ref: '#/components/schemas/QueryTemplate'
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    QueryContext:
+      title: QueryContext
+      type: object
+      properties:
+        query_string:
+          title: Query String
+          type: string
+          description: The query string to be executed. Can either be a complete or templated query.
+        template_id:
+          title: Template Id
+          type: integer
+          description: The ID of the query template to be used.
+        template_name:
+          title: Template Name
+          type: string
+          description: The name of the query template to be used.
+        parameters:
+          title: Parameters
+          type: object
+          description: A dictionary of parameters if a templated query is used.
+          default: {}
+    QueryLogResponse:
+      title: QueryLogResponse
+      type: object
+      properties:
+        query_id:
+          title: Query Id
+          type: string
+          description: A unique ID that identifies the query.
+        statement_type:
+          title: Statement Type
+          type: string
+          description: The query type (ex. SELECT, DELETE, etc).
+        start_time:
+          title: Start Time
+          type: string
+          description: The start time of the query execution.
+          format: date-time
+        end_time:
+          title: End Time
+          type: string
+          description: The end time of the query execution.
+          format: date-time
+        query:
+          title: Query
+          type: string
+          description: The query string that was executed.
+          default: ''
+        referer:
+          title: Referer
+          type: string
+          description: Indicates where the REST API call was made from.
+          default: ''
+        state:
+          title: State
+          type: string
+          description: Shows the state of the query execution (either RUNNING or COMPLETE).
+        destination_table_name:
+          title: Destination Table Name
+          type: string
+          description: Shows the table where the results are stored in (If the statement_type is a SELECT, a new destination_table is created. Otherwise, the destination_table_name shows the affected table).
+        destination_schema:
+          title: Destination Schema
+          type: string
+          description: Shows in which schema the destination_table is stored in.
+        error_result:
+          title: Error Result
+          type: string
+          description: Stores the error message if there was an error while executing the query.
+        created_at:
+          title: Created At
+          type: string
+          description: Shows the timestamp of when the query log was created.
+          format: date-time
+        records:
+          title: Records
+          type: array
+          items:
+            type: object
+          description: Returns a sample of the data (max. 100).
+          default: []
+        total_records:
+          title: Total Records
+          type: integer
+          description: The number of records returned with DQL queries.
+          default: 0
+        affected_records:
+          title: Affected Records
+          type: integer
+          description: The number of records that are affected by DML or DDL queries.
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+  securitySchemes:
+    Bearer Auth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Enter: **''Bearer &lt;JWT&gt;''**, where JWT is the access token. Example: Bearer access_token_comes_here'
