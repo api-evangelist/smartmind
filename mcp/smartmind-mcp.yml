@@ -1,0 +1,115 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/smartmind-thanosql-openapi.json
+notes: >-
+  No official hosted/remote MCP server was found for ThanoSQL/SmartMind. This is a
+  candidate tool list derived one-per-operation from the ThanoSQL OpenAPI, provided as
+  a starting point for wrapping the API as MCP tools.
+server:
+  name: thanosql
+  transport: http
+  status: candidate
+tools:
+  - name: post_query_api_v1_query__post
+    description: Post Query (POST /api/v1/query/)
+    source_operation: openapi/smartmind-thanosql-openapi.json#post_query_api_v1_query__post
+  - name: get_query_logs_api_v1_query_log_get
+    description: Get Query Logs (GET /api/v1/query/log)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_query_logs_api_v1_query_log_get
+  - name: get_templates_api_v1_query_template_get
+    description: Get Templates (GET /api/v1/query/template)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_templates_api_v1_query_template_get
+  - name: create_template_api_v1_query_template_post
+    description: Create Template (POST /api/v1/query/template)
+    source_operation: openapi/smartmind-thanosql-openapi.json#create_template_api_v1_query_template_post
+  - name: get_template_api_v1_query_template__template_name__get
+    description: Get Template (GET /api/v1/query/template/{template_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_template_api_v1_query_template__template_name__get
+  - name: update_template_api_v1_query_template__template_name__put
+    description: Update Template (PUT /api/v1/query/template/{template_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#update_template_api_v1_query_template__template_name__put
+  - name: delete_template_api_v1_query_template__template_name__delete
+    description: Delete Template (DELETE /api/v1/query/template/{template_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#delete_template_api_v1_query_template__template_name__delete
+  - name: get_tables_api_v1_table__get
+    description: Get Tables (GET /api/v1/table/)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_tables_api_v1_table__get
+  - name: get_table_api_v1_table__table_name__get
+    description: Get Table (GET /api/v1/table/{table_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_table_api_v1_table__table_name__get
+  - name: update_table_api_v1_table__table_name__put
+    description: Update Table (PUT /api/v1/table/{table_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#update_table_api_v1_table__table_name__put
+  - name: create_table_api_v1_table__table_name__post
+    description: Create Table (POST /api/v1/table/{table_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#create_table_api_v1_table__table_name__post
+  - name: delete_table_api_v1_table__table_name__delete
+    description: Delete Table (DELETE /api/v1/table/{table_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#delete_table_api_v1_table__table_name__delete
+  - name: get_records_api_v1_table__table_name__records_get
+    description: Get Records (GET /api/v1/table/{table_name}/records)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_records_api_v1_table__table_name__records_get
+  - name: insert_records_api_v1_table__table_name__records_post
+    description: Insert Records (POST /api/v1/table/{table_name}/records)
+    source_operation: openapi/smartmind-thanosql-openapi.json#insert_records_api_v1_table__table_name__records_post
+  - name: get_records_as_csv_api_v1_table__table_name__records_csv_get
+    description: Get records as a CSV file (GET /api/v1/table/{table_name}/records/csv)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_records_as_csv_api_v1_table__table_name__records_csv_get
+  - name: upload_table_from_csv_api_v1_table__table_name__upload_csv_post
+    description: Upload Table From Csv (POST /api/v1/table/{table_name}/upload/csv)
+    source_operation: openapi/smartmind-thanosql-openapi.json#upload_table_from_csv_api_v1_table__table_name__upload_csv_post
+  - name: upload_table_from_excel_api_v1_table__table_name__upload_excel_post
+    description: Upload Table From Excel (POST /api/v1/table/{table_name}/upload/excel)
+    source_operation: openapi/smartmind-thanosql-openapi.json#upload_table_from_excel_api_v1_table__table_name__upload_excel_post
+  - name: upload_table_from_json_api_v1_table__table_name__upload_json_post
+    description: Upload Table From Json (POST /api/v1/table/{table_name}/upload/json)
+    source_operation: openapi/smartmind-thanosql-openapi.json#upload_table_from_json_api_v1_table__table_name__upload_json_post
+  - name: get_all_table_templates_api_v1_table_template__get
+    description: Get All Table Templates (GET /api/v1/table_template/)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_all_table_templates_api_v1_table_template__get
+  - name: get_table_template_api_v1_table_template__table_template_name__get
+    description: Get Table Template (GET /api/v1/table_template/{table_template_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_table_template_api_v1_table_template__table_template_name__get
+  - name: create_table_template_api_v1_table_template__table_template_name__post
+    description: Create Table Template (POST /api/v1/table_template/{table_template_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#create_table_template_api_v1_table_template__table_template_name__post
+  - name: delete_table_template_api_v1_table_template__table_template_name__delete
+    description: Delete Table Template (DELETE /api/v1/table_template/{table_template_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#delete_table_template_api_v1_table_template__table_template_name__delete
+  - name: get_views_api_v1_view__get
+    description: Get Views (GET /api/v1/view/)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_views_api_v1_view__get
+  - name: get_view_api_v1_view__view_name__get
+    description: Get View (GET /api/v1/view/{view_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_view_api_v1_view__view_name__get
+  - name: delete_view_api_v1_view__view_name__delete
+    description: Delete View (DELETE /api/v1/view/{view_name})
+    source_operation: openapi/smartmind-thanosql-openapi.json#delete_view_api_v1_view__view_name__delete
+  - name: get_schemas_api_v1_schema__get
+    description: Get Schemas (GET /api/v1/schema/)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_schemas_api_v1_schema__get
+  - name: create_schema_api_v1_schema__schema__post
+    description: Create Schema (POST /api/v1/schema/{schema})
+    source_operation: openapi/smartmind-thanosql-openapi.json#create_schema_api_v1_schema__schema__post
+  - name: get_db_health_api_v1_healthz_get
+    description: Get Db Health (GET /api/v1/healthz)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_db_health_api_v1_healthz_get
+  - name: get_memory_metrics_api_v1_metric_memory__get
+    description: Get Memory Metrics (GET /api/v1/metric/memory/)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_memory_metrics_api_v1_metric_memory__get
+  - name: get_fm_api_v1_contents__path__get
+    description: Get (GET /fm/api/v1/contents/{path})
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_fm_api_v1_contents__path__get
+  - name: delete_fm_api_v1_contents__path__delete
+    description: Delete (DELETE /fm/api/v1/contents/{path})
+    source_operation: openapi/smartmind-thanosql-openapi.json#delete_fm_api_v1_contents__path__delete
+  - name: create_fm_api_v1_contents__destination__post
+    description: Create (POST /fm/api/v1/contents/{destination})
+    source_operation: openapi/smartmind-thanosql-openapi.json#create_fm_api_v1_contents__destination__post
+  - name: move_fm_api_v1_contents__source__patch
+    description: Move (PATCH /fm/api/v1/contents/{source})
+    source_operation: openapi/smartmind-thanosql-openapi.json#move_fm_api_v1_contents__source__patch
+  - name: get_size_fm_api_v1_size__get
+    description: Get Size (GET /fm/api/v1/size/)
+    source_operation: openapi/smartmind-thanosql-openapi.json#get_size_fm_api_v1_size__get

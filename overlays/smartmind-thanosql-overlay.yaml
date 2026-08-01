@@ -1,0 +1,33 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for ThanoSQL (SmartMind)
+  version: 1.0.0
+extends: openapi/smartmind-thanosql-openapi.json
+x-generated: '2026-07-21'
+x-method: generated
+x-source: openapi/smartmind-thanosql-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: smartmind
+      x-apievangelist-product: ThanoSQL
+      x-apievangelist-status: legacy
+      x-apievangelist-notes: >-
+        SmartMind AI's ThanoSQL analytical RDB / AI-DB. Hosted docs (docs.thanosql.com)
+        decommissioned; OpenAPI + Python SDK (pypi:thanosql) remain published. Company has
+        pivoted to Qurify / AI-Minwon.
+  - target: $.servers
+    update:
+      - url: "{engine_url}/api/v1"
+        description: >-
+          ThanoSQL data API is served from a per-workspace engine URL (THANOSQL_ENGINE_URL).
+          The file-manager surface is served under {engine_url}/fm/api/v1. No single shared
+          public host; the spec ships without a servers[] block.
+        variables:
+          engine_url:
+            default: https://your-workspace.engine.thanosql
+            description: Your workspace engine URL from the Developer tab of workspace settings.
+  - target: $.components.securitySchemes.'Bearer Auth'
+    update:
+      x-apievangelist-auth-model: bearer-jwt
+      x-apievangelist-token-source: workspace Developer tab (THANOSQL_API_TOKEN)

@@ -1,0 +1,59 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/smartmind-thanosql-openapi.json
+notes: >-
+  Cross-cutting request/response semantics for the ThanoSQL REST API, derived from the
+  OpenAPI and the official Python SDK README. No provider-published conventions/idempotency
+  page survives (hosted docs decommissioned), so this is derived, not searched.
+authentication:
+  style: bearer-jwt
+  header: Authorization
+  format: "Bearer <JWT>"
+  scheme_name: Bearer Auth
+  applied: all-operations
+  see: authentication/smartmind-authentication.yml
+base_path:
+  data_api: /api/v1
+  file_manager: /fm/api/v1
+  engine_url: per-workspace (THANOSQL_ENGINE_URL) — not a single shared public host
+versioning:
+  style: uri-path
+  current: v1
+  see: lifecycle/smartmind-lifecycle.yml
+pagination:
+  style: limit-offset
+  params:
+    - limit
+    - offset
+  response_fields:
+    - total
+  example_operation: get_query_logs_api_v1_query_log_get
+  response_schema: PaginatedQueryLogResponse
+idempotency:
+  supported: false
+  notes: >-
+    No Idempotency-Key header or param is defined. Write conflicts are instead controlled
+    per-operation with declarative guards (if_exists, if_not_exists, on_conflict, overwrite),
+    which are NOT idempotency keys.
+conflict_handling:
+  params:
+    - if_exists
+    - if_not_exists
+    - on_conflict
+    - overwrite
+  applies_to: [create_schema, create_table, create_table_template, upload_table_from_csv, upload_table_from_excel, upload_table_from_json]
+query_options:
+  params:
+    - dry_run
+    - verbose
+    - option
+    - timezone_offset
+    - order_by
+    - search
+    - max_results
+error_envelope:
+  media_type: application/json
+  schema: HTTPValidationError
+  see: errors/smartmind-problem-types.yml
+rate_limiting:
+  documented: false

@@ -1,0 +1,36 @@
+# SmartMind — ThanoSQL
+
+> SmartMind AI Inc. is a South Korean AI company (Techstars 2020, Seoul) building
+> ontology-based enterprise AI. Its current products are Qurify (natural-language data
+> analysis combining structured databases and unstructured documents via a TAG+RAG, 2-tier
+> ontology architecture) and AI-Minwon (a government/public-administration application).
+> Its earlier product, ThanoSQL, is an analytical relational database with a built-in
+> LLM/DL/ML query layer, exposed through a REST API and an official Python SDK. This profile
+> captures the still-published ThanoSQL developer surface; the hosted ThanoSQL documentation
+> has been decommissioned.
+
+## APIs
+- [ThanoSQL REST API (OpenAPI 3.0.2)](openapi/smartmind-thanosql-openapi.json): 34 operations over query, table, schema, view, table_template, file-manager, health, and metric resources. JWT Bearer auth (Authorization header). Base paths /api/v1 and /fm/api/v1 on a per-workspace engine URL.
+
+## SDKs & Packages
+- [thanosql (PyPI, official, MIT)](https://pypi.org/project/thanosql/): Python SDK, v1.0.11, Python >=3.8. `pip install thanosql`.
+- [thanosql-magic (PyPI, official, archived)](https://pypi.org/project/thanosql-magic/): Jupyter/IPython SQL magic. `pip install 'thanosql[magic]'`.
+- [SDK source](https://github.com/smartmind-team/thanosql-sdk-python)
+- [SDK reference docs (live)](https://thanosql-sdk-python.readthedocs.io/en/latest/)
+
+## Artifacts
+- [Authentication profile](authentication/smartmind-authentication.yml): JWT Bearer via Authorization header.
+- [API conventions](conventions/smartmind-conventions.yml): auth, limit/offset pagination, conflict-handling params, error envelope, uri-path versioning.
+- [Error catalog](errors/smartmind-problem-types.yml): FastAPI 422 HTTPValidationError envelope + 401.
+- [Data model / ERD](data-model/smartmind-data-model.yml): schema/table/column/view/template/query-log graph.
+- [Lifecycle](lifecycle/smartmind-lifecycle.yml): v1, no status page; hosted docs decommissioned.
+- [Conformance](conformance/smartmind-conformance.yml): OpenAPI 3.0, JWT bearer, limit/offset pagination.
+- [Agentic access contracts](agentic-access/smartmind-agentic-access.yml): recommended x-agentic-access per operation.
+- [MCP candidate tools](mcp/smartmind-mcp.yml): one tool per operation.
+- [OpenAPI overlay](overlays/smartmind-thanosql-overlay.yaml): API Evangelist enhancements.
+
+## Company
+- [SmartMind AI website](https://smartmind-ai.io/)
+- [GitHub organization](https://github.com/smartmind-team)
+- [Terms of Service](https://smartmind-ai.io/terms)
+- [Privacy Policy](https://smartmind-ai.io/privacy)

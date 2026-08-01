@@ -1,0 +1,28 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/smartmind-thanosql-openapi.json
+notes: >-
+  Derived lifecycle posture for the ThanoSQL API. SmartMind AI has pivoted its product line
+  to Qurify / AI-Minwon (ontology-based enterprise AI); the ThanoSQL developer surface is
+  legacy. The hosted documentation at docs.thanosql.com is decommissioned (HTTP 404, TLS
+  certificate expired 2025-11-18) and the thanosql.ai marketing domain no longer resolves.
+  The OpenAPI spec and the `thanosql` Python SDK remain published.
+versioning:
+  scheme: uri-path
+  current: v1
+  paths: [/api/v1, /fm/api/v1]
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+availability:
+  hosted_docs: decommissioned
+  hosted_docs_last_host: https://docs.thanosql.com/
+  hosted_docs_status: 404 (Vercel deployment removed; TLS cert expired 2025-11-18)
+  marketing_domain: https://thanosql.ai/ (no DNS A/NS record — defunct)
+  sdk_docs: https://thanosql-sdk-python.readthedocs.io/en/latest/ (live, 200)
+  pypi: https://pypi.org/project/thanosql/ (live)

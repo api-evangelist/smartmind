@@ -1,0 +1,20 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/smartmind-thanosql-openapi.json
+skills:
+  - file: smartmind-run-query.md
+    name: Run a ThanoSQL query and review its log
+    api: openapi/smartmind-thanosql-openapi.json
+    operations:
+      - post_query_api_v1_query__post
+      - get_query_logs_api_v1_query_log_get
+      - get_schemas_api_v1_schema__get
+  - file: smartmind-create-and-load-table.md
+    name: Create a ThanoSQL table and load records
+    api: openapi/smartmind-thanosql-openapi.json
+    operations:
+      - create_table_api_v1_table__table_name__post
+      - insert_records_api_v1_table__table_name__records_post
+      - upload_table_from_csv_api_v1_table__table_name__upload_csv_post
+      - get_records_api_v1_table__table_name__records_get
+      - get_table_api_v1_table__table_name__get

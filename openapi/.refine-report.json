@@ -1,0 +1,28 @@
+{
+  "provider": "smartmind",
+  "sources": [
+    "smartmind-file-api-openapi.yml",
+    "smartmind-health-api-openapi.yml",
+    "smartmind-metric-api-openapi.yml",
+    "smartmind-query-api-openapi.yml",
+    "smartmind-schema-api-openapi.yml",
+    "smartmind-table-api-openapi.yml",
+    "smartmind-table-template-api-openapi.yml",
+    "smartmind-view-api-openapi.yml"
+  ],
+  "outputs": [
+    "smartmind-file-api-openapi.yml",
+    "smartmind-health-api-openapi.yml",
+    "smartmind-metric-api-openapi.yml",
+    "smartmind-query-api-openapi.yml",
+    "smartmind-schema-api-openapi.yml",
+    "smartmind-table-api-openapi.yml",
+    "smartmind-table-template-api-openapi.yml",
+    "smartmind-view-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

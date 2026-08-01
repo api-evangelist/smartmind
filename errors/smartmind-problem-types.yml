@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/smartmind-thanosql-openapi.json
+format: fastapi-validation
+notes: >-
+  Derived from the ThanoSQL OpenAPI. The API is a FastAPI service: every non-health
+  operation declares a 422 Unprocessable Entity response carrying the FastAPI
+  HTTPValidationError envelope (application/json), NOT RFC 9457 application/problem+json.
+  Standard HTTP semantics apply for 200/401/404 (401 for missing/invalid Bearer JWT is
+  enforced by the security scheme but not enumerated per-operation in the spec).
+envelope:
+  media_type: application/json
+  schema: HTTPValidationError
+  shape:
+    detail:
+      - loc: ["array of location segments (body/query/path + field)"]
+        msg: human-readable validation message
+        type: error type token (e.g. value_error.missing)
+problems:
+  - status: 422
+    title: Validation Error
+    schema: HTTPValidationError
+    media_type: application/json
+    description: >-
+      Request failed input validation (missing/invalid body, query, or path parameter).
+      Applies to all 32 data operations across query, table, table_template, view,
+      schema, and file-manager resources.
+  - status: 401
+    title: Unauthorized
+    description: >-
+      Missing or invalid `Authorization: Bearer <JWT>` credential. Enforced by the
+      "Bearer Auth" apiKey security scheme applied to every operation; not enumerated
+      as a per-operation response in the spec.
+    derived_from: components.securitySchemes."Bearer Auth"

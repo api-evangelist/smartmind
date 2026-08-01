@@ -1,0 +1,17 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/smartmind-thanosql-openapi.json
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: Bearer Auth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'Enter: **''Bearer &lt;JWT&gt;''**, where JWT is the access token. Example: Bearer
+    access_token_comes_here'
+  sources:
+  - openapi/smartmind-thanosql-openapi.json

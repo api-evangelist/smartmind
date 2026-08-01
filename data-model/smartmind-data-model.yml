@@ -1,0 +1,72 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/smartmind-thanosql-openapi.json
+notes: >-
+  Entity-relationship graph derived from the ThanoSQL OpenAPI component schemas and the
+  resource path hierarchy. ThanoSQL is an analytical relational database with an AI/ML
+  query layer; the API exposes schemas, tables, views, records, and reusable templates.
+entities:
+  - name: Schema
+    schema: Schema
+    description: A namespace grouping tables and views (e.g. "public").
+    key: name
+  - name: Table
+    schema: Table
+    description: A relational table with columns and constraints, owned by a schema.
+    fields: [name, schema, columns, constraints]
+  - name: Column
+    schema: Column
+    description: A typed column belonging to a table (or view).
+  - name: Constraints
+    schema: Constraints
+    description: Table constraints (primary key, foreign key, unique).
+    parts: [PrimaryKey, ForeignKey, Unique]
+  - name: View
+    schema: View
+    description: A named query view with a definition, owned by a schema.
+    fields: [name, schema, columns, definition]
+  - name: Records
+    description: The row data of a table, read/inserted via /table/{table_name}/records.
+  - name: TableTemplate
+    schema: TableTemplate
+    description: A reusable, versioned table-shape template.
+  - name: QueryTemplate
+    schema: QueryTemplate
+    description: A reusable, named/parameterizable SQL query template.
+  - name: QueryLog
+    schema: QueryLog
+    description: An execution log record for a submitted query.
+    fields: [query_id, statement_type, start_time, end_time, query, referer, state, destination_table_name, destination_schema, error_result, created_at]
+relationships:
+  - from: Table
+    to: Schema
+    kind: belongs_to
+    via: schema
+  - from: View
+    to: Schema
+    kind: belongs_to
+    via: schema
+  - from: Table
+    to: Column
+    kind: has_many
+    via: columns
+  - from: Table
+    to: Constraints
+    kind: has_one
+    via: constraints
+  - from: Constraints
+    to: ForeignKey
+    kind: has_many
+    via: foreign_keys
+  - from: View
+    to: Column
+    kind: has_many
+    via: columns
+  - from: QueryLog
+    to: Table
+    kind: belongs_to
+    via: destination_table_name
+  - from: QueryLog
+    to: Schema
+    kind: belongs_to
+    via: destination_schema

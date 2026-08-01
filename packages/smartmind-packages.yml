@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: https://pypi.org/project/thanosql/
+notes: >-
+  First-party client libraries for the ThanoSQL API published by SmartMind AI Inc.
+  (GitHub org github.com/smartmind-team). ThanoSQL is SmartMind's earlier analytical
+  RDB / AI-DB product; these packages remain published on PyPI even though the hosted
+  docs (docs.thanosql.com) have been decommissioned.
+packages:
+  - language: python
+    registry: pypi
+    name: thanosql
+    url: https://pypi.org/project/thanosql/
+    install: pip install thanosql
+    version: 1.0.11
+    license: MIT
+    repository: https://github.com/smartmind-team/thanosql-sdk-python
+    official: true
+    description: >-
+      Official ThanoSQL SDK for Python (>=3.8). Provides query, table, schema, view,
+      and file service layers over the ThanoSQL REST API using an API token + engine URL.
+  - language: python
+    registry: pypi
+    name: thanosql-magic
+    url: https://pypi.org/project/thanosql-magic/
+    install: pip install 'thanosql[magic]'
+    license: MIT
+    repository: https://github.com/smartmind-team/thanosql-magic
+    official: true
+    archived: true
+    description: >-
+      IPython/Jupyter magic extension for ThanoSQL (archived upstream; installed as the
+      `magic` extra of the `thanosql` package).

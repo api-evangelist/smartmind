@@ -1,0 +1,3144 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "THANOSQL api",
+    "description": "THANOSQL TEST API documentation",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/query/": {
+      "post": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Post Query",
+        "description": "Executes queries using either a query string or a query template.\n\n\u003CNote\u003EThe `query_string` field holds direct queries or templates that can\nbe modified with specified parameters. You can also recall saved query\ntemplates by their `template_id` or `template_name`. These templates, regardless\nof how they are called, can be used with or without parameters.\u003C/Note\u003E",
+        "operationId": "post_query_api_v1_query__post",
+        "parameters": [
+          {
+            "description": "The schema to save the created table to. If no parameter is provided, defaults to \"qm\" if table_name is also not specified, and \"public\" otherwise.",
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "description": "The schema to save the created table to. If no parameter is provided, defaults to \"qm\" if table_name is also not specified, and \"public\" otherwise."
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "description": "The name that will be used to create the table produced by the query execution, if any. If not provided, defaults to a randomly generated name.",
+            "required": false,
+            "schema": {
+              "title": "Table Name",
+              "type": "string",
+              "description": "The name that will be used to create the table produced by the query execution, if any. If not provided, defaults to a randomly generated name."
+            },
+            "name": "table_name",
+            "in": "query"
+          },
+          {
+            "description": "Determines if the table shall be overwritten or not if it already exists.",
+            "required": false,
+            "schema": {
+              "title": "Overwrite",
+              "type": "boolean",
+              "description": "Determines if the table shall be overwritten or not if it already exists.",
+              "default": false
+            },
+            "name": "overwrite",
+            "in": "query"
+          },
+          {
+            "description": "Specifies the maximum number of records that should be returned in the result set (max: 100).",
+            "required": false,
+            "schema": {
+              "title": "Max Results",
+              "type": "integer",
+              "description": "Specifies the maximum number of records that should be returned in the result set (max: 100).",
+              "default": 0
+            },
+            "name": "max_results",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryContext"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryLogResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/query/log": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Get Query Logs",
+        "description": "Returns a list of Query Logs and the total number/count of Query Logs. This endpoint is paginated.\n\nRequest\n----------\n__Request Parameters__\n\n    - offset: int, default 0\n        The offset to where the pagination count will start from.\n    - limit: int, default 0\n        The number of items to retrieve starting from the offset.\n        Max value is 100.\n\nResponse\n-------\n__QueryLogReponse__\n\n    - query_logs: List[QueryLog]\n        A list of QueryLogs.\n    - total: int\n        Total number of QueryLogs in the database.",
+        "operationId": "get_query_logs_api_v1_query_log_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Search",
+              "type": "string",
+              "default": ""
+            },
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedQueryLogResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/query/template": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Get Templates",
+        "description": "Gets the paginated list of all the query templates.\nThe API can only return 100 tables at a time,\nstarting from the offset number specified.\n\nParameters\n----------\n- offset: int, default 0\n    The offset position of where to select the templates from.\n- limit: int, default 100\n    The number of templates to retrieve. This value must range from 0 and 100.\n- search: str, default empty\n    Substring to look for in query template names\n- order_by: str, default \"recent\"\n    How the query template results should be ordered, there are three possible values:\n    - recent: based on the date of creation, from most recent to oldest\n    - name_asc: based on the name of the template, from A to Z\n    - name_desc: based on the name of the template, from Z to A\n\nReturns\n-------\nA QueryTemplates Pydantic object containing a List of QueryTemplate objects.",
+        "operationId": "get_templates_api_v1_query_template_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Search",
+              "type": "string",
+              "default": ""
+            },
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Order By",
+              "type": "string",
+              "default": "recent"
+            },
+            "name": "order_by",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryTemplatesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Create Template",
+        "description": "Creates a new query template with a certain name and query string.\n\nParameters\n----------\n- body: CreateQueryTemplateRequest\n    The body of the template creation request, consisting of the template name and query string.\n\nReturns\n-------\nA QueryTemplate Pydantic object containing the recently created query template object.",
+        "operationId": "create_template_api_v1_query_template_post",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Dry Run",
+              "type": "boolean",
+              "default": false
+            },
+            "name": "dry_run",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateQueryTemplateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryTemplateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/query/template/{template_name}": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Get Template",
+        "description": "Gets the query template object with the specified template_name.\n\nParameters\n----------\n- template_name: str\n    The name of the template user wants to get.\n\nReturns\n-------\nA QueryTemplate Pydantic object containing the target query template.",
+        "operationId": "get_template_api_v1_query_template__template_name__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Template Name",
+              "type": "string"
+            },
+            "name": "template_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryTemplateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Update Template",
+        "description": "Updates the query template with the specified template_name.\n\nParameters\n----------\n- template_name: str\n    The name of the template user wants to update.\n- body: UpdateQueryTemplateRequest\n    The body of the template creation request, consisting of the template name and query string.\n\nReturns\n-------\nA QueryTemplate Pydantic object containing the target query template.",
+        "operationId": "update_template_api_v1_query_template__template_name__put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Template Name",
+              "type": "string"
+            },
+            "name": "template_name",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQueryTemplateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryTemplateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Delete Template",
+        "description": "Deletes the query template with the specified template_name.\n\nParameters\n----------\n- template_name: str\n    The name of the template user wants to update.\n\nReturns\n-------\nA QueryTemplateMessage Pydantic object containing a success message.",
+        "operationId": "delete_template_api_v1_query_template__template_name__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Template Name",
+              "type": "string"
+            },
+            "name": "template_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryTemplateMessageResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/table/": {
+      "get": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Get Tables",
+        "description": "Gets the paginated list of all the tables from the given schema. If no\nschema is provided then the function retreives all of the tables from\nall of the schemas. pg_catalog and information_schema related tables are\nexempted, unless specified. The API can only return 100 tables at a time,\nstarting from the offset number specified.\n\nParameters\n----------\n- schema : str, default None\n    The schema to retrieve the tables from. If None is\n    provided, refers to all schemas.\n- verbose: bool, default False\n    Whether to include only base information or verbose information on the tables.\n- offset: int, default 0\n    The offset position of where to select the tables from.\n- limit: int, default 100\n    The number of tables to retrieve. This value must range from 0 and 100.\n\nReturns\n-------\nA TablesResponse Pydantic object containing a List of\neither Table Pydantic or Base Table Pydantic models depending\non the verbose parameter.",
+        "operationId": "get_tables_api_v1_table__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string"
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Verbose",
+              "type": "boolean",
+              "default": false
+            },
+            "name": "verbose",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response (when verbose is set to True)",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                },
+                "example": {
+                  "tables": [
+                    {
+                      "name": "string",
+                      "schema": "string",
+                      "columns": [
+                        {
+                          "id": 0,
+                          "default": "string",
+                          "is_nullable": true,
+                          "type": "string",
+                          "name": "string"
+                        }
+                      ],
+                      "constraints": {
+                        "primary_key": {
+                          "name": "",
+                          "columns": []
+                        },
+                        "foreign_keys": [
+                          {
+                            "name": "string",
+                            "reference_schema": "public",
+                            "reference_column": "string",
+                            "reference_table": "string",
+                            "column": "string"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/table/{table_name}": {
+      "get": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Get Table",
+        "description": "Gets the Table object with the specified table_name and\nschema. If the schema is not specified, it automatically\ndefaults to public.\n\nParameters\n----------\ntable_name: str\nschema : str, default public\n    The schema to retrieve the tables from. If no parameter is\n    provided, assigned as public.\n\nReturns\n-------\nA TableResponse Pydantic object containing a Table Pydantic object.",
+        "operationId": "get_table_api_v1_table__table_name__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Update Table",
+        "description": "Alters the table specified with the table_name and schema to the\nTable object specified in the body parameter.\n\nInstructions\n------------\nIn order to update an object, simply change the values of the Table objects\nin the request body. To delete, simply remove the object from the request body.\nTo add, add the desired object to the request body.\n\nThe query is built in the following order:\n\nDROP UNIQUE CONSTRAINT -\u003E DROP PRIMARY KEY -\u003E DROP FOREIGN KEY -\u003E DROP COLUMN -\u003E ADD COLUMN -\u003E ALTER COLUMN -\u003E\nRENAME COLUMN -\u003E ADD UNIQUE CONSTRAINT -\u003E ADD PRIMARY KEY -\u003E ADD FOREIGN KEY -\u003E RENAME TABLE -\u003E SET SCHEMA\n\n### Caution:\nFor the columns, it is important to note that the id is the\nunique key used to identify the column. If you remove the column_id key\nfrom the Column object, it will be dropped from the database and be recreated.\n\nSince there is a given order for execution, if your alter requires to not follow the\norder above, make sure to separate the API calls.\n\n\nParameters\n----------\n- table_name: str,\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- body: AlterTableRequest, default None\n\nReturns\n-------\nA Table Pydantic object.",
+        "operationId": "update_table_api_v1_table__table_name__put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlterTableRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Create Table",
+        "description": "Creates the table in the database using the BaseTableObjects object\nprovided in the request body, the table_name, and schema.\n\n*Note*: When adding Column objects to the list of columns,\nthere is no need to specify the id since the id just refers\nto the ordinal position of the column. Additionally if\nthe table is created with an empty body, an empty table will\nbe created. If no table_name is specified, the table will be\ncreated with a random uuid string.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- if_not_exists: bool, default False\n    Whether to throw an error if a table of the same name already\n    exists. When set to False, an error will be shown. When True,\n    the table will only be created if it does not exist already.\n    Otherwise, do nothing.\n- body: CreateTableRequest, default None\nReturns\n-------\nA Table Pydantic object.",
+        "operationId": "create_table_api_v1_table__table_name__post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "If Not Exists",
+              "type": "boolean",
+              "default": false
+            },
+            "name": "if_not_exists",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTableRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Delete Table",
+        "description": "Deletes the table specified by the table_name and schema.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n\nReturns\n-------\nA TableMessage Pydantic object containing a success message and the table_name.",
+        "operationId": "delete_table_api_v1_table__table_name__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableMessageResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/table/{table_name}/records": {
+      "get": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Get Records",
+        "description": "Returns the paginated records of the given table specified by the table_name and\nschema. The API can only return 100 records at a time, starting from the offset\nnumber specified.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- offset: int, default 0\n    The offset position of where to select the records from.\n- limit: int, default 100\n    The number of records to retrieve. This value must range from\n    0 and 100.\n\nReturns\n-------\nA TableRecordsResponse Pydantic object containing\nthe records and total number of records.",
+        "operationId": "get_records_api_v1_table__table_name__records_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableRecordsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Insert Records",
+        "description": "Inserts the records in the input body into a table in a specified schema.\n\nParameters\n----------\n- table_name: str\n- records: list[dict]\n    The list of key-value pairs to be inserted to the table\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is provided, defaults to \"public\".\n- on_conflict: str, default \"fail\"\n    What to do in case (an) inserted value(s) generate(s) a conflict due to the target table's\n    unique constraint. Available options:\n      - \"fail\" -\u003E gives an error, insertion is only possible if unique constraint(s)\n          is(are) not violated\n      - \"skip\" -\u003E does nothing on conflicted record, doesn't perform the insertion for that\n          particular record but doesn't cancel the entire insertion process\n      - if user inputs anything other than these two, the server will throw an exception\n\nReturns\n-------\nA Table Pydantic object.",
+        "operationId": "insert_records_api_v1_table__table_name__records_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "On Conflict",
+              "type": "string",
+              "default": "fail"
+            },
+            "name": "on_conflict",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Records",
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/table/{table_name}/records/csv": {
+      "get": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Get records as a CSV file",
+        "description": "Returns the csv of the given table specified by the table_name and\nschema.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- timezone_offset: int\n    The timezone offset applied to the datetime formats. Defaults to 9 (KST).\n\nReturns\n-------\nA StreamingResponse Pydantic object that iterates through the csv.\nIf the table is empty, returns a Response object with code 204.",
+        "operationId": "get_records_as_csv_api_v1_table__table_name__records_csv_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Timezone Offset",
+              "type": "integer",
+              "default": 9
+            },
+            "name": "timezone_offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/table/{table_name}/upload/csv": {
+      "post": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Upload Table From Csv",
+        "description": "Inserts records from a CSV file into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -\u003E creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -\u003E appends records into an existing table (columns must match in order to not generate an exception)\n  - \"replace\" -\u003E deletes an existing table and creates a new one with the same name\n  - if user inputs anything other than these three, the server will throw an exception\n- file: .csv file to be inserted\n- body: the request body if table template columns were to be added manually, optional\n\nReturns\n-------\nA Table Pydantic object.",
+        "operationId": "upload_table_from_csv_api_v1_table__table_name__upload_csv_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "If Exists",
+              "type": "string",
+              "default": "fail"
+            },
+            "name": "if_exists",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_table_from_csv_api_v1_table__table_name__upload_csv_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/table/{table_name}/upload/excel": {
+      "post": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Upload Table From Excel",
+        "description": "Inserts records from a type of Excel file into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -\u003E creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -\u003E appends records into an existing table (columns must match in order to not generate an exception)\n  - \"replace\" -\u003E deletes an existing table and creates a new one with the same name\n  - if user inputs anything other than these three, the server will throw an exception\n- file: Excel file to be inserted\n- body: the request body if table schema columns were to be added manually, optional\n\nReturns\n-------\nA Table Pydantic object.",
+        "operationId": "upload_table_from_excel_api_v1_table__table_name__upload_excel_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "If Exists",
+              "type": "string",
+              "default": "fail"
+            },
+            "name": "if_exists",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/table/{table_name}/upload/json": {
+      "post": {
+        "tags": [
+          "table"
+        ],
+        "summary": "Upload Table From Json",
+        "description": "Inserts records from JSON into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -\u003E creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -\u003E appends records into an existing table (columns must match in order to not generate an exception)\n  - \"replace\" -\u003E deletes an existing table and creates a new one with the same name\n  - if user inputs anything other than these three, the server will throw an exception\n- body:\n  - \"table\": optionally specify a table object is to be added manually.\n  - \"data\": where the json object with the records format (list of json objects) is specified.\n\nReturns\n-------\nA TableResponse Pydantic object.",
+        "operationId": "upload_table_from_json_api_v1_table__table_name__upload_json_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Name",
+              "type": "string"
+            },
+            "name": "table_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "If Exists",
+              "type": "string",
+              "default": "fail"
+            },
+            "name": "if_exists",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTableWithJSON"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/table_template/": {
+      "get": {
+        "tags": [
+          "table_template"
+        ],
+        "summary": "Get All Table Templates",
+        "description": "Retrieves all available table templates\n\nParameters\n----------\n- search: str, default: empty\n    Substring to look for in table template titles\n- order_by: str, default: \"recent\"\n    How the query results should be ordered, there are three possible values:\n    - recent: based on the date of creation, from most recent to oldest\n    - name_asc: based on the name of the table template, from A to Z\n    - name_desc: based on the name of the table template, from Z to A\n- latest: bool, default: False\n    If set to True, returns all of the latest table templates\n\nReturns\n-------\nA TableTemplates Pydantic object containing the table template objects.",
+        "operationId": "get_all_table_templates_api_v1_table_template__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Search",
+              "type": "string",
+              "default": ""
+            },
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Order By",
+              "type": "string",
+              "default": "recent"
+            },
+            "name": "order_by",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Latest",
+              "type": "boolean",
+              "default": false
+            },
+            "name": "latest",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableTemplatesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/table_template/{table_template_name}": {
+      "get": {
+        "tags": [
+          "table_template"
+        ],
+        "summary": "Get Table Template",
+        "description": "Retrieves table template(s) by name. User may choose to request only the\nlatest table template or a template with a certain version.\n\nParameters\n----------\n- table_template_name: the name of the table template\n- version: the version of the table template that the user wants to get\n    User can fill in 'latest' if they want to retrieve the latest version of the table template\n    User can leave the version parameter blank if they want to get all versions of the table template\n\nReturns\n-------\nA TableTemplates Pydantic object containing the table template objects.",
+        "operationId": "get_table_template_api_v1_table_template__table_template_name__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Template Name",
+              "type": "string"
+            },
+            "name": "table_template_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Version",
+              "type": "string",
+              "default": ""
+            },
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableTemplatesWithVersionsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "table_template"
+        ],
+        "summary": "Create Table Template",
+        "description": "Creates table template from an input and saves it into\nschema registry (table_template table in user database).\n\nParameters\n----------\n- table_template_name: the name of the table template\n- body: the body of the request, consisting of the table template body\n\nReturns\n-------\nA TableTemplate Pydantic object.",
+        "operationId": "create_table_template_api_v1_table_template__table_template_name__post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Template Name",
+              "type": "string"
+            },
+            "name": "table_template_name",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTableTemplateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableTemplateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "table_template"
+        ],
+        "summary": "Delete Table Template",
+        "description": "Deletes table template of a certain name and version from the database.\n\nParameters\n----------\n- table_template_name: the name of the table template\n- version: the version of the table template that the user wants to delete\n    User can leave the version parameter blank if they want to delete all versions of the table template\n\nReturns\n-------\nA TableTemplateMessage Pydantic object containing a\nsuccess message and the table template name.",
+        "operationId": "delete_table_template_api_v1_table_template__table_template_name__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Table Template Name",
+              "type": "string"
+            },
+            "name": "table_template_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Version",
+              "type": "string"
+            },
+            "name": "version",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableTemplateMessageResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/view/": {
+      "get": {
+        "tags": [
+          "view"
+        ],
+        "summary": "Get Views",
+        "description": "Gets the paginated list of all the views from the given schema. If no\nschema is provided then the function retreives all of the views from\nall of the schemas. pg_catalog and information_schema related views are\nexempted, unless specified. The API can only return 100 views at a time,\nstarting from the offset number specified.\n\nParameters\n----------\n- schema : str, default None\n    The schema to retrieve the views from. If None is\n    provided, refers to all schemas.\n- verbose: bool, default False\n    Whether to include only base information or verbose information on the views.\n- offset: int, default 0\n    The offset position of where to select the views from.\n- limit: int, default 100\n    The number of views to retrieve. This value must range from 0 and 100.\n\nReturns\n-------\nA ViewsResponse Pydantic object containing a List of\neither View Pydantic or Base Table Pydantic models depending\non the verbose parameter.",
+        "operationId": "get_views_api_v1_view__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string"
+            },
+            "name": "schema",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Verbose",
+              "type": "boolean",
+              "default": false
+            },
+            "name": "verbose",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/view/{view_name}": {
+      "get": {
+        "tags": [
+          "view"
+        ],
+        "summary": "Get View",
+        "description": "Gets the View object with the specified view_name and\nschema. If the schema is not specified, it automatically\ndefaults to public.\n\nParameters\n----------\nview_name: str\nschema : str, default public\n    The schema to retrieve the views from. If no parameter is\n    provided, assigned as public.\n\nReturns\n-------\nA ViewResponse Pydantic object containing a View Pydantic object.",
+        "operationId": "get_view_api_v1_view__view_name__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "View Name",
+              "type": "string"
+            },
+            "name": "view_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViewResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "view"
+        ],
+        "summary": "Delete View",
+        "description": "Deletes the view specified by view_name and schema.\n\nParameters\n----------\n- view_name: str\n- schema : str, default \"public\"\n    The schema to delete the view from. If no parameter is\n    provided, defaults to \"public\".\n\nReturns\n-------\nA ViewMessage Pydantic object containing a success message and the view_name.",
+        "operationId": "delete_view_api_v1_view__view_name__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "View Name",
+              "type": "string"
+            },
+            "name": "view_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Schema",
+              "type": "string",
+              "default": "public"
+            },
+            "name": "schema",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViewMessageResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/schema/": {
+      "get": {
+        "tags": [
+          "schema"
+        ],
+        "summary": "Get Schemas",
+        "description": "Gets all the schemas from the database.\n\nReturns\n-------\nA SchemasResponse Pydantic object containing a List of\nTable Schema objects.",
+        "operationId": "get_schemas_api_v1_schema__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemasResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/schema/{schema}": {
+      "post": {
+        "tags": [
+          "schema"
+        ],
+        "summary": "Create Schema",
+        "operationId": "create_schema_api_v1_schema__schema__post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Schema",
+              "type": "string"
+            },
+            "name": "schema",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/healthz": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Get Db Health",
+        "operationId": "get_db_health_api_v1_healthz_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/metric/memory/": {
+      "get": {
+        "tags": [
+          "metric"
+        ],
+        "summary": "Get Memory Metrics",
+        "operationId": "get_memory_metrics_api_v1_metric_memory__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryMetric"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/fm/api/v1/contents/{path}": {
+      "get": {
+        "tags": [
+          "file"
+        ],
+        "summary": "Get",
+        "description": "Retrieves file/directory information or downloads a file.\n\nPath parameter\n--------------\n- path: the path to the file/directory relative to the user data root\n        (default value is \"/\", the user data root directory itself)\n\nQuery parameters\n----------------\n- option: controls the behavior of the API\n    - default (None): retrieves file/directory information\n        Returns a Content Pydantic object containing information on the target path\n    - \"download\": downloads a file (directory download is not possible)\n        Streams the file content or does the download and returns nothing,\n        depending on the client request",
+        "operationId": "get_fm_api_v1_contents__path__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Path",
+              "type": "string"
+            },
+            "name": "path",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Option",
+              "type": "string"
+            },
+            "name": "option",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Show Hidden Files",
+              "type": "boolean",
+              "default": true
+            },
+            "name": "show_hidden_files",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Content"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "file"
+        ],
+        "summary": "Delete",
+        "description": "Deletes a file or directory permanently.\n\nPath parameter\n--------------\n- path: the path to the file/directory to be deleted\n        relative to the user data root (no default value)\n\nReturn\n------\nNo content (nothing is returned)",
+        "operationId": "delete_fm_api_v1_contents__path__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Path",
+              "type": "string"
+            },
+            "name": "path",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/fm/api/v1/contents/{destination}": {
+      "post": {
+        "tags": [
+          "file"
+        ],
+        "summary": "Create",
+        "description": "Uploads a file or creates an empty folder.\n\nPath parameter\n--------------\n- destination: the destination path of the upload/folder creation relative to the user data root.\n        destination should point to a (would-be) directory, otherwise NotADirectoryError will occur.\n        (default value is \"/\", the user data root directory itself)\n\nAdditional input\n----------------\n- file: the file to be uploaded (optional)\n    - if a file is attached, uploads the file to the destination path\n        Returns a Content Pydantic object containing\n        information on the file uploaded\n    - if no file is attached, creates an empty folder following the destination path\n        Returns a Content Pydantic object containing\n        information on the newly-created folder",
+        "operationId": "create_fm_api_v1_contents__destination__post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Destination",
+              "type": "string"
+            },
+            "name": "destination",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_fm_api_v1_contents__destination__post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Content"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/fm/api/v1/contents/{source}": {
+      "patch": {
+        "tags": [
+          "file"
+        ],
+        "summary": "Move",
+        "description": "Moves, renames, or copies a file or directory.\n\nPath parameter\n--------------\n- source: the path to the file/directory to be moved/renamed/copied\n        relative to the user data root (no default value)\n\nQuery parameters\n----------------\n- destination: the path to the destination file/directory (no default value)\n- option: controls the behavior of the API\n    - default (None): moves or renames a file or directory. If the same\n        file/directory already exists in the destination, the API behavior\n        follows the behavior of Linux file systems.\n        Returns a Content Pydantic object containing information on the\n        destination file/directory\n    - \"copy\": copies a file or directory. destination should be a directory.\n        If the same file/directory already exists in the destination, the\n        copied file/directory will be automatically renamed.\n        Returns a Content Pydantic object containing information on the\n        destination file/directory",
+        "operationId": "move_fm_api_v1_contents__source__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Source",
+              "type": "string"
+            },
+            "name": "source",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Destination",
+              "type": "string"
+            },
+            "name": "destination",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Option",
+              "type": "string"
+            },
+            "name": "option",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Content"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    },
+    "/fm/api/v1/size/": {
+      "get": {
+        "tags": [
+          "file"
+        ],
+        "summary": "Get Size",
+        "operationId": "get_size_fm_api_v1_size__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Size"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Auth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlterTableRequest": {
+        "title": "AlterTableRequest",
+        "required": [
+          "table"
+        ],
+        "type": "object",
+        "properties": {
+          "table": {
+            "$ref": "#/components/schemas/Table"
+          }
+        }
+      },
+      "BaseColumn": {
+        "title": "BaseColumn",
+        "required": [
+          "type",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "default": {
+            "title": "Default",
+            "type": "string"
+          },
+          "is_nullable": {
+            "title": "Is Nullable",
+            "type": "boolean",
+            "default": true
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        }
+      },
+      "BaseTableObjects": {
+        "title": "BaseTableObjects",
+        "type": "object",
+        "properties": {
+          "columns": {
+            "title": "Columns",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BaseColumn"
+            }
+          },
+          "constraints": {
+            "$ref": "#/components/schemas/Constraints"
+          }
+        }
+      },
+      "Body_create_fm_api_v1_contents__destination__post": {
+        "title": "Body_create_fm_api_v1_contents__destination__post",
+        "type": "object",
+        "properties": {
+          "file": {
+            "title": "File",
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "Body_upload_table_from_csv_api_v1_table__table_name__upload_csv_post": {
+        "title": "Body_upload_table_from_csv_api_v1_table__table_name__upload_csv_post",
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "title": "File",
+            "type": "string",
+            "format": "binary"
+          },
+          "body": {
+            "$ref": "#/components/schemas/CreateTableWithFileRequest"
+          }
+        }
+      },
+      "Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post": {
+        "title": "Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post",
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "title": "File",
+            "type": "string",
+            "format": "binary"
+          },
+          "body": {
+            "$ref": "#/components/schemas/CreateTableWithFileRequest"
+          }
+        }
+      },
+      "Column": {
+        "title": "Column",
+        "required": [
+          "type",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "default": {
+            "title": "Default",
+            "type": "string"
+          },
+          "is_nullable": {
+            "title": "Is Nullable",
+            "type": "boolean",
+            "default": true
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        }
+      },
+      "Constraints": {
+        "title": "Constraints",
+        "type": "object",
+        "properties": {
+          "unique": {
+            "title": "Unique",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Unique"
+            }
+          },
+          "primary_key": {
+            "$ref": "#/components/schemas/PrimaryKey"
+          },
+          "foreign_keys": {
+            "title": "Foreign Keys",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForeignKey"
+            }
+          }
+        }
+      },
+      "Content": {
+        "title": "Content",
+        "type": "object",
+        "properties": {
+          "content_info": {
+            "title": "Content Info",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ContentInfo"
+              }
+            ],
+            "default": {
+              "name": "",
+              "path": "",
+              "type": "file",
+              "writable": true,
+              "created_at": "0001-01-01T00:00:00",
+              "updated_at": "0001-01-01T00:00:00"
+            }
+          },
+          "root": {
+            "title": "Root",
+            "type": "string",
+            "default": "/home/jovyan"
+          }
+        }
+      },
+      "ContentInfo": {
+        "title": "ContentInfo",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "default": ""
+          },
+          "format": {
+            "title": "Format",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string",
+            "default": ""
+          },
+          "type": {
+            "title": "Type",
+            "type": "string",
+            "default": "file"
+          },
+          "size": {
+            "title": "Size",
+            "type": "integer"
+          },
+          "writable": {
+            "title": "Writable",
+            "type": "boolean",
+            "default": true
+          },
+          "content": {
+            "title": "Content"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time",
+            "default": "0001-01-01T00:00:00"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time",
+            "default": "0001-01-01T00:00:00"
+          }
+        }
+      },
+      "CreateQueryTemplateRequest": {
+        "title": "CreateQueryTemplateRequest",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "default": ""
+          },
+          "query": {
+            "title": "Query",
+            "type": "string",
+            "default": ""
+          }
+        }
+      },
+      "CreateTableRequest": {
+        "title": "CreateTableRequest",
+        "required": [
+          "table"
+        ],
+        "type": "object",
+        "properties": {
+          "table": {
+            "$ref": "#/components/schemas/BaseTableObjects"
+          }
+        }
+      },
+      "CreateTableTemplateRequest": {
+        "title": "CreateTableTemplateRequest",
+        "required": [
+          "table_template"
+        ],
+        "type": "object",
+        "properties": {
+          "table_template": {
+            "$ref": "#/components/schemas/BaseTableObjects"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          },
+          "compatibility": {
+            "title": "Compatibility",
+            "type": "string"
+          }
+        }
+      },
+      "CreateTableWithFileRequest": {
+        "title": "CreateTableWithFileRequest",
+        "required": [
+          "table"
+        ],
+        "type": "object",
+        "properties": {
+          "table": {
+            "$ref": "#/components/schemas/BaseTableObjects"
+          }
+        }
+      },
+      "CreateTableWithJSON": {
+        "title": "CreateTableWithJSON",
+        "type": "object",
+        "properties": {
+          "table": {
+            "$ref": "#/components/schemas/BaseTableObjects"
+          },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "default": []
+          }
+        }
+      },
+      "ForeignKey": {
+        "title": "ForeignKey",
+        "required": [
+          "reference_column",
+          "reference_table",
+          "column"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "reference_schema": {
+            "title": "Reference Schema",
+            "type": "string",
+            "default": "public"
+          },
+          "reference_column": {
+            "title": "Reference Column",
+            "type": "string"
+          },
+          "reference_table": {
+            "title": "Reference Table",
+            "type": "string"
+          },
+          "column": {
+            "title": "Column",
+            "type": "string"
+          }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "MemoryMetric": {
+        "title": "MemoryMetric",
+        "type": "object",
+        "properties": {
+          "gpus": {
+            "title": "Gpus",
+            "type": "array",
+            "items": {
+
+            },
+            "default": []
+          },
+          "ram": {
+            "title": "Ram",
+            "type": "object",
+            "default": {
+
+            }
+          }
+        }
+      },
+      "PaginatedQueryLogResponse": {
+        "title": "PaginatedQueryLogResponse",
+        "required": [
+          "query_logs",
+          "total"
+        ],
+        "type": "object",
+        "properties": {
+          "query_logs": {
+            "title": "Query Logs",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QueryLog"
+            }
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        }
+      },
+      "PrimaryKey": {
+        "title": "PrimaryKey",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "default": ""
+          },
+          "columns": {
+            "title": "Columns",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          }
+        }
+      },
+      "QueryContext": {
+        "title": "QueryContext",
+        "type": "object",
+        "properties": {
+          "query_string": {
+            "title": "Query String",
+            "type": "string",
+            "description": "The query string to be executed. Can either be a complete or templated query."
+          },
+          "template_id": {
+            "title": "Template Id",
+            "type": "integer",
+            "description": "The ID of the query template to be used."
+          },
+          "template_name": {
+            "title": "Template Name",
+            "type": "string",
+            "description": "The name of the query template to be used."
+          },
+          "parameters": {
+            "title": "Parameters",
+            "type": "object",
+            "description": "A dictionary of parameters if a templated query is used.",
+            "default": {
+
+            }
+          }
+        }
+      },
+      "QueryLog": {
+        "title": "QueryLog",
+        "type": "object",
+        "properties": {
+          "query_id": {
+            "title": "Query Id",
+            "type": "string",
+            "description": "A unique ID that identifies the query."
+          },
+          "statement_type": {
+            "title": "Statement Type",
+            "type": "string",
+            "description": "The query type (ex. SELECT, DELETE, etc)."
+          },
+          "start_time": {
+            "title": "Start Time",
+            "type": "string",
+            "description": "The start time of the query execution.",
+            "format": "date-time"
+          },
+          "end_time": {
+            "title": "End Time",
+            "type": "string",
+            "description": "The end time of the query execution.",
+            "format": "date-time"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string",
+            "description": "The query string that was executed.",
+            "default": ""
+          },
+          "referer": {
+            "title": "Referer",
+            "type": "string",
+            "description": "Indicates where the REST API call was made from.",
+            "default": ""
+          },
+          "state": {
+            "title": "State",
+            "type": "string",
+            "description": "Shows the state of the query execution (either RUNNING or COMPLETE)."
+          },
+          "destination_table_name": {
+            "title": "Destination Table Name",
+            "type": "string",
+            "description": "Shows the table where the results are stored in (If the statement_type is a SELECT, a new destination_table is created. Otherwise, the destination_table_name shows the affected table)."
+          },
+          "destination_schema": {
+            "title": "Destination Schema",
+            "type": "string",
+            "description": "Shows in which schema the destination_table is stored in."
+          },
+          "error_result": {
+            "title": "Error Result",
+            "type": "string",
+            "description": "Stores the error message if there was an error while executing the query."
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "description": "Shows the timestamp of when the query log was created.",
+            "format": "date-time"
+          }
+        }
+      },
+      "QueryLogResponse": {
+        "title": "QueryLogResponse",
+        "type": "object",
+        "properties": {
+          "query_id": {
+            "title": "Query Id",
+            "type": "string",
+            "description": "A unique ID that identifies the query."
+          },
+          "statement_type": {
+            "title": "Statement Type",
+            "type": "string",
+            "description": "The query type (ex. SELECT, DELETE, etc)."
+          },
+          "start_time": {
+            "title": "Start Time",
+            "type": "string",
+            "description": "The start time of the query execution.",
+            "format": "date-time"
+          },
+          "end_time": {
+            "title": "End Time",
+            "type": "string",
+            "description": "The end time of the query execution.",
+            "format": "date-time"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string",
+            "description": "The query string that was executed.",
+            "default": ""
+          },
+          "referer": {
+            "title": "Referer",
+            "type": "string",
+            "description": "Indicates where the REST API call was made from.",
+            "default": ""
+          },
+          "state": {
+            "title": "State",
+            "type": "string",
+            "description": "Shows the state of the query execution (either RUNNING or COMPLETE)."
+          },
+          "destination_table_name": {
+            "title": "Destination Table Name",
+            "type": "string",
+            "description": "Shows the table where the results are stored in (If the statement_type is a SELECT, a new destination_table is created. Otherwise, the destination_table_name shows the affected table)."
+          },
+          "destination_schema": {
+            "title": "Destination Schema",
+            "type": "string",
+            "description": "Shows in which schema the destination_table is stored in."
+          },
+          "error_result": {
+            "title": "Error Result",
+            "type": "string",
+            "description": "Stores the error message if there was an error while executing the query."
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "description": "Shows the timestamp of when the query log was created.",
+            "format": "date-time"
+          },
+          "records": {
+            "title": "Records",
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Returns a sample of the data (max. 100).",
+            "default": []
+          },
+          "total_records": {
+            "title": "Total Records",
+            "type": "integer",
+            "description": "The number of records returned with DQL queries.",
+            "default": 0
+          },
+          "affected_records": {
+            "title": "Affected Records",
+            "type": "integer",
+            "description": "The number of records that are affected by DML or DDL queries."
+          }
+        }
+      },
+      "QueryTemplate": {
+        "title": "QueryTemplate",
+        "required": [
+          "name",
+          "query"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          },
+          "parameters": {
+            "title": "Parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "QueryTemplateMessageResponse": {
+        "title": "QueryTemplateMessageResponse",
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        }
+      },
+      "QueryTemplateResponse": {
+        "title": "QueryTemplateResponse",
+        "required": [
+          "query_template"
+        ],
+        "type": "object",
+        "properties": {
+          "query_template": {
+            "$ref": "#/components/schemas/QueryTemplate"
+          }
+        }
+      },
+      "QueryTemplatesResponse": {
+        "title": "QueryTemplatesResponse",
+        "required": [
+          "query_templates"
+        ],
+        "type": "object",
+        "properties": {
+          "query_templates": {
+            "title": "Query Templates",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QueryTemplate"
+            }
+          }
+        }
+      },
+      "Schema": {
+        "title": "Schema",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        }
+      },
+      "SchemasResponse": {
+        "title": "SchemasResponse",
+        "required": [
+          "schemas"
+        ],
+        "type": "object",
+        "properties": {
+          "schemas": {
+            "title": "Schemas",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Schema"
+            }
+          }
+        }
+      },
+      "Size": {
+        "title": "Size",
+        "type": "object",
+        "properties": {
+          "max_size": {
+            "title": "Max Size",
+            "type": "integer",
+            "default": 0
+          },
+          "used_size": {
+            "title": "Used Size",
+            "type": "integer",
+            "default": 0
+          },
+          "avail_size": {
+            "title": "Avail Size",
+            "type": "integer",
+            "default": 0
+          }
+        }
+      },
+      "Table": {
+        "title": "Table",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "schema": {
+            "title": "Schema",
+            "type": "string"
+          },
+          "columns": {
+            "title": "Columns",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Column"
+            }
+          },
+          "constraints": {
+            "$ref": "#/components/schemas/Constraints"
+          }
+        }
+      },
+      "TableMessageResponse": {
+        "title": "TableMessageResponse",
+        "required": [
+          "message",
+          "table_name",
+          "schema"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "table_name": {
+            "title": "Table Name",
+            "type": "string"
+          },
+          "schema": {
+            "title": "Schema",
+            "type": "string"
+          }
+        }
+      },
+      "TableRecordsResponse": {
+        "title": "TableRecordsResponse",
+        "required": [
+          "total"
+        ],
+        "type": "object",
+        "properties": {
+          "records": {
+            "title": "Records",
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        }
+      },
+      "TableResponse": {
+        "title": "TableResponse",
+        "required": [
+          "table"
+        ],
+        "type": "object",
+        "properties": {
+          "table": {
+            "$ref": "#/components/schemas/Table"
+          }
+        }
+      },
+      "TableTemplate": {
+        "title": "TableTemplate",
+        "required": [
+          "name",
+          "table_template"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "table_template": {
+            "$ref": "#/components/schemas/BaseTableObjects"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          },
+          "compatibility": {
+            "title": "Compatibility",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TableTemplateMessageResponse": {
+        "title": "TableTemplateMessageResponse",
+        "required": [
+          "message",
+          "table_template_name"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "table_template_name": {
+            "title": "Table Template Name",
+            "type": "string"
+          }
+        }
+      },
+      "TableTemplateResponse": {
+        "title": "TableTemplateResponse",
+        "required": [
+          "table_template"
+        ],
+        "type": "object",
+        "properties": {
+          "table_template": {
+            "$ref": "#/components/schemas/TableTemplate"
+          }
+        }
+      },
+      "TableTemplatesResponse": {
+        "title": "TableTemplatesResponse",
+        "required": [
+          "table_templates"
+        ],
+        "type": "object",
+        "properties": {
+          "table_templates": {
+            "title": "Table Templates",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TableTemplate"
+            }
+          }
+        }
+      },
+      "TableTemplatesWithVersionsResponse": {
+        "title": "TableTemplatesWithVersionsResponse",
+        "required": [
+          "table_templates",
+          "versions"
+        ],
+        "type": "object",
+        "properties": {
+          "table_templates": {
+            "title": "Table Templates",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TableTemplate"
+            }
+          },
+          "versions": {
+            "title": "Versions",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Unique": {
+        "title": "Unique",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "default": ""
+          },
+          "columns": {
+            "title": "Columns",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          }
+        }
+      },
+      "UpdateQueryTemplateRequest": {
+        "title": "UpdateQueryTemplateRequest",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      },
+      "View": {
+        "title": "View",
+        "required": [
+          "definition"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "schema": {
+            "title": "Schema",
+            "type": "string"
+          },
+          "columns": {
+            "title": "Columns",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Column"
+            }
+          },
+          "definition": {
+            "title": "Definition",
+            "type": "string"
+          }
+        }
+      },
+      "ViewMessageResponse": {
+        "title": "ViewMessageResponse",
+        "required": [
+          "message",
+          "view_name"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "view_name": {
+            "title": "View Name",
+            "type": "string"
+          }
+        }
+      },
+      "ViewResponse": {
+        "title": "ViewResponse",
+        "required": [
+          "view"
+        ],
+        "type": "object",
+        "properties": {
+          "view": {
+            "$ref": "#/components/schemas/View"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer Auth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Enter: **'Bearer &lt;JWT&gt;'**, where JWT is the access token. Example: Bearer access_token_comes_here"
+      }
+    }
+  }
+}

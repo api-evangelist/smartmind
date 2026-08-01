@@ -1,25 +1,199 @@
 aid: smartmind
 name: SmartMind
-description: SmartMind is a company surfaced as a portfolio company of techstars and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  SmartMind AI Inc. is a South Korean AI company (Techstars 2020, Seoul) building
+  ontology-based enterprise AI. Its current products are Qurify — a natural-language data
+  analysis platform that answers questions without SQL by combining structured databases
+  and unstructured documents through a TAG+RAG hybrid architecture and a 2-tier ontology —
+  and AI-Minwon, a government/public-administration application built on Qurify. SmartMind's
+  earlier product, ThanoSQL, is an analytical relational database with a built-in LLM/DL/ML
+  query layer, exposed through a REST API (OpenAPI 3.0.2, 34 operations across query, table,
+  schema, view, template, file-manager, health, and metric resources) and an official Python
+  SDK (pypi:thanosql). This profile captures the still-published ThanoSQL developer surface;
+  the hosted ThanoSQL documentation has been decommissioned.
 url: https://raw.githubusercontent.com/api-evangelist/smartmind/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://avatars.githubusercontent.com/u/103923556?v=4
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - techstars
-x-tier: stub
+x-tier: enriched
 x-tier-reason: portfolio-lead
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- Artificial Intelligence
+- Machine Learning
+- Database
+- Analytics
+- Data
+- SQL
+- Ontology
+- RAG
+- Enterprise AI
+apis:
+- aid: smartmind:smartmind-file-api
+  name: SmartMind file API
+  description: The file API from SmartMind — 4 operation(s) for file.
+  humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  tags:
+  - file
+  properties:
+  - type: OpenAPI
+    url: openapi/smartmind-file-api-openapi.yml
+  - type: APIReference
+    url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
+- aid: smartmind:smartmind-health-api
+  name: SmartMind health API
+  description: The health API from SmartMind — 1 operation(s) for health.
+  humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  tags:
+  - health
+  properties:
+  - type: OpenAPI
+    url: openapi/smartmind-health-api-openapi.yml
+  - type: APIReference
+    url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
+- aid: smartmind:smartmind-metric-api
+  name: SmartMind metric API
+  description: The metric API from SmartMind — 1 operation(s) for metric.
+  humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  tags:
+  - metric
+  properties:
+  - type: OpenAPI
+    url: openapi/smartmind-metric-api-openapi.yml
+  - type: APIReference
+    url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
+- aid: smartmind:smartmind-query-api
+  name: SmartMind query API
+  description: The query API from SmartMind — 4 operation(s) for query.
+  humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  tags:
+  - query
+  properties:
+  - type: OpenAPI
+    url: openapi/smartmind-query-api-openapi.yml
+  - type: APIReference
+    url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
+- aid: smartmind:smartmind-schema-api
+  name: SmartMind schema API
+  description: The schema API from SmartMind — 2 operation(s) for schema.
+  humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  tags:
+  - schema
+  properties:
+  - type: OpenAPI
+    url: openapi/smartmind-schema-api-openapi.yml
+  - type: APIReference
+    url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
+- aid: smartmind:smartmind-table-api
+  name: SmartMind table API
+  description: The table API from SmartMind — 7 operation(s) for table.
+  humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  tags:
+  - table
+  properties:
+  - type: OpenAPI
+    url: openapi/smartmind-table-api-openapi.yml
+  - type: APIReference
+    url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
+- aid: smartmind:smartmind-table-template-api
+  name: SmartMind table_template API
+  description: The table_template API from SmartMind — 2 operation(s) for table_template.
+  humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  tags:
+  - table_template
+  properties:
+  - type: OpenAPI
+    url: openapi/smartmind-table-template-api-openapi.yml
+  - type: APIReference
+    url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
+- aid: smartmind:smartmind-view-api
+  name: SmartMind view API
+  description: The view API from SmartMind — 2 operation(s) for view.
+  humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
+  tags:
+  - view
+  properties:
+  - type: OpenAPI
+    url: openapi/smartmind-view-api-openapi.yml
+  - type: APIReference
+    url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/smartmind-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/smartmind-agentic-access.yml
+- type: Authentication
+  url: authentication/smartmind-authentication.yml
+- type: OpenAPI
+  url: openapi/smartmind-thanosql-openapi.json
+- type: Overlay
+  url: overlays/smartmind-thanosql-overlay.yaml
+- type: Packages
+  url: packages/smartmind-packages.yml
+- type: SDKs
+  url: packages/smartmind-packages.yml
+- type: MCPServer
+  url: mcp/smartmind-mcp.yml
+- type: ErrorCatalog
+  url: errors/smartmind-problem-types.yml
+- type: Conventions
+  url: conventions/smartmind-conventions.yml
+- type: DataModel
+  url: data-model/smartmind-data-model.yml
+- type: Conformance
+  url: conformance/smartmind-conformance.yml
+- type: Lifecycle
+  url: lifecycle/smartmind-lifecycle.yml
+- type: LLMsTxt
+  url: llms/smartmind-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Documentation
+  url: https://thanosql-sdk-python.readthedocs.io/en/latest/
+- type: APIReference
+  url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
+- type: GitHubOrganization
+  url: https://github.com/smartmind-team
+- type: TermsOfService
+  url: https://smartmind-ai.io/terms
+- type: PrivacyPolicy
+  url: https://smartmind-ai.io/privacy
+- type: Support
+  url: https://smartmind-ai.io/contact
 - type: Website
-  url: https://smartmind.team/
+  url: https://smartmind-ai.io/
