@@ -160,7 +160,7 @@ common:
 - type: Authentication
   url: authentication/smartmind-authentication.yml
 - type: OpenAPI
-  url: openapi/smartmind-thanosql-openapi.json
+  url: openapi/_original/smartmind-thanosql-openapi.json
 - type: Overlay
   url: overlays/smartmind-thanosql-overlay.yaml
 - type: Packages
