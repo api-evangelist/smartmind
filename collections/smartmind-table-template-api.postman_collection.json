@@ -1,0 +1,791 @@
+{
+  "item": [
+    {
+      "id": "c7b7768f-5b9a-4c5d-a547-9939b6cfa80e",
+      "name": "table_template",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "211a43b6-afb8-4d10-8a2e-4239587a9c05",
+          "name": "Get All Table Templates",
+          "request": {
+            "name": "Get All Table Templates",
+            "description": {
+              "content": "Retrieves all available table templates\n\nParameters\n----------\n- search: str, default: empty\n    Substring to look for in table template titles\n- order_by: str, default: \"recent\"\n    How the query results should be ordered, there are three possible values:\n    - recent: based on the date of creation, from most recent to oldest\n    - name_asc: based on the name of the table template, from A to Z\n    - name_desc: based on the name of the table template, from Z to A\n- latest: bool, default: False\n    If set to True, returns all of the latest table templates\n\nReturns\n-------\nA TableTemplates Pydantic object containing the table template objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table_template",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "recent"
+                },
+                {
+                  "disabled": false,
+                  "key": "latest",
+                  "value": "false"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5e2b55c3-fe14-4cc8-b69b-830f5da83511",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table_template",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": ""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "recent"
+                    },
+                    {
+                      "key": "latest",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table_templates\": [\n    {\n      \"name\": \"string\",\n      \"table_template\": {\n        \"columns\": [\n          {\n            \"type\": \"string\",\n            \"name\": \"string\",\n            \"default\": \"string\",\n            \"is_nullable\": true\n          },\n          {\n            \"type\": \"string\",\n            \"name\": \"string\",\n            \"default\": \"string\",\n            \"is_nullable\": true\n          }\n        ],\n        \"constraints\": {\n          \"unique\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"primary_key\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"columns\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"foreign_keys\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"version\": \"string\",\n      \"compatibility\": \"string\",\n      \"created_at\": \"1970-05-18T03:52:15.190Z\"\n    },\n    {\n      \"name\": \"string\",\n      \"table_template\": {\n        \"columns\": [\n          {\n            \"type\": \"string\",\n            \"name\": \"string\",\n            \"default\": \"string\",\n            \"is_nullable\": true\n          },\n          {\n            \"type\": \"string\",\n            \"name\": \"string\",\n            \"default\": \"string\",\n            \"is_nullable\": true\n          }\n        ],\n        \"constraints\": {\n          \"unique\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"primary_key\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"columns\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"foreign_keys\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"version\": \"string\",\n      \"compatibility\": \"string\",\n      \"created_at\": \"2006-07-07T03:33:08.965Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "581b13b2-1673-443b-87fa-84185504f3ac",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table_template",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": ""
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "recent"
+                    },
+                    {
+                      "key": "latest",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e2b9faf-0474-41ed-ae4e-47e934db7ce8",
+          "name": "Get Table Template",
+          "request": {
+            "name": "Get Table Template",
+            "description": {
+              "content": "Retrieves table template(s) by name. User may choose to request only the\nlatest table template or a template with a certain version.\n\nParameters\n----------\n- table_template_name: the name of the table template\n- version: the version of the table template that the user wants to get\n    User can fill in 'latest' if they want to retrieve the latest version of the table template\n    User can leave the version parameter blank if they want to get all versions of the table template\n\nReturns\n-------\nA TableTemplates Pydantic object containing the table template objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table_template",
+                ":table_template_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_template_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "657cfec3-7c24-460b-827d-da6020587215",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table_template",
+                    ":table_template_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_template_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table_templates\": [\n    {\n      \"name\": \"string\",\n      \"table_template\": {\n        \"columns\": [\n          {\n            \"type\": \"string\",\n            \"name\": \"string\",\n            \"default\": \"string\",\n            \"is_nullable\": true\n          },\n          {\n            \"type\": \"string\",\n            \"name\": \"string\",\n            \"default\": \"string\",\n            \"is_nullable\": true\n          }\n        ],\n        \"constraints\": {\n          \"unique\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"primary_key\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"columns\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"foreign_keys\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"version\": \"string\",\n      \"compatibility\": \"string\",\n      \"created_at\": \"1983-12-08T23:41:52.652Z\"\n    },\n    {\n      \"name\": \"string\",\n      \"table_template\": {\n        \"columns\": [\n          {\n            \"type\": \"string\",\n            \"name\": \"string\",\n            \"default\": \"string\",\n            \"is_nullable\": true\n          },\n          {\n            \"type\": \"string\",\n            \"name\": \"string\",\n            \"default\": \"string\",\n            \"is_nullable\": true\n          }\n        ],\n        \"constraints\": {\n          \"unique\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"primary_key\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"columns\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"foreign_keys\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"version\": \"string\",\n      \"compatibility\": \"string\",\n      \"created_at\": \"1973-06-23T17:19:41.676Z\"\n    }\n  ],\n  \"versions\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b0cc2c8-7be1-483d-bfbe-46dd1893e5d9",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table_template",
+                    ":table_template_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_template_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc168a0f-4434-4460-ab91-5e2164413dcd",
+          "name": "Create Table Template",
+          "request": {
+            "name": "Create Table Template",
+            "description": {
+              "content": "Creates table template from an input and saves it into\nschema registry (table_template table in user database).\n\nParameters\n----------\n- table_template_name: the name of the table template\n- body: the body of the request, consisting of the table template body\n\nReturns\n-------\nA TableTemplate Pydantic object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table_template",
+                ":table_template_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_template_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_template\": {\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  },\n  \"version\": \"<string>\",\n  \"compatibility\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "08044321-cb36-4f18-a916-19489cf41fe5",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table_template",
+                    ":table_template_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_template_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_template\": {\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  },\n  \"version\": \"<string>\",\n  \"compatibility\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table_template\": {\n    \"name\": \"string\",\n    \"table_template\": {\n      \"columns\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"default\": \"<string>\",\n          \"is_nullable\": true\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"default\": \"<string>\",\n          \"is_nullable\": true\n        }\n      ],\n      \"constraints\": {\n        \"unique\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"columns\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"columns\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"primary_key\": {\n          \"name\": \"\"\n        },\n        \"foreign_keys\": [\n          {\n            \"reference_column\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_table\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"column\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_schema\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"reference_column\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_table\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"column\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reference_schema\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"version\": \"string\",\n    \"compatibility\": \"string\",\n    \"created_at\": \"1961-01-04T23:42:14.016Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fff6baf3-dd7c-478a-a783-3c66da80cd41",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table_template",
+                    ":table_template_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_template_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table_template\": {\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  },\n  \"version\": \"<string>\",\n  \"compatibility\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d802a93-7c7e-4535-abeb-44cc51ef9dbe",
+          "name": "Delete Table Template",
+          "request": {
+            "name": "Delete Table Template",
+            "description": {
+              "content": "Deletes table template of a certain name and version from the database.\n\nParameters\n----------\n- table_template_name: the name of the table template\n- version: the version of the table template that the user wants to delete\n    User can leave the version parameter blank if they want to delete all versions of the table template\n\nReturns\n-------\nA TableTemplateMessage Pydantic object containing a\nsuccess message and the table template name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table_template",
+                ":table_template_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_template_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9b697f34-b80c-40ba-b7a1-c6d50a281d4c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table_template",
+                    ":table_template_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_template_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"table_template_name\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff1b2133-7476-4701-bd86-ab73991f2cb1",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table_template",
+                    ":table_template_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_template_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "899ecb9e-d368-4427-8920-14373a0ae03a",
+    "name": "THANOSQL api file table_template API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "THANOSQL TEST API documentation",
+      "type": "text/plain"
+    }
+  }
+}

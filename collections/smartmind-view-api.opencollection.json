@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "THANOSQL api file view API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "view",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Views",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/view/",
+            "params": [
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "verbose",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets the paginated list of all the views from the given schema. If no\nschema is provided then the function retreives all of the views from\nall of the schemas. pg_catalog and information_schema related views are\nexempted, unless specified. The API can only return 100 views at a time,\nstarting from the offset number specified.\n\nParameters\n----------\n- schema : str, default None\n    The schema to retrieve the views from. If None is\n    provided, refers to all schemas.\n- verbose: bool, default False"
+        },
+        {
+          "info": {
+            "name": "Get View",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/view/:view_name",
+            "params": [
+              {
+                "name": "view_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets the View object with the specified view_name and\nschema. If the schema is not specified, it automatically\ndefaults to public.\n\nParameters\n----------\nview_name: str\nschema : str, default public\n    The schema to retrieve the views from. If no parameter is\n    provided, assigned as public.\n\nReturns\n-------\nA ViewResponse Pydantic object containing a View Pydantic object."
+        },
+        {
+          "info": {
+            "name": "Delete View",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/view/:view_name",
+            "params": [
+              {
+                "name": "view_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes the view specified by view_name and schema.\n\nParameters\n----------\n- view_name: str\n- schema : str, default \"public\"\n    The schema to delete the view from. If no parameter is\n    provided, defaults to \"public\".\n\nReturns\n-------\nA ViewMessage Pydantic object containing a success message and the view_name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

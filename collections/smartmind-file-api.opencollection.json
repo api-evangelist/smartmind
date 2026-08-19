@@ -1,0 +1,155 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "THANOSQL api file API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "file",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fm/api/v1/contents/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "option",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "show_hidden_files",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves file/directory information or downloads a file.\n\nPath parameter\n--------------\n- path: the path to the file/directory relative to the user data root\n        (default value is \"/\", the user data root directory itself)\n\nQuery parameters\n----------------\n- option: controls the behavior of the API\n    - default (None): retrieves file/directory information\n        Returns a Content Pydantic object containing information on the target path\n    - \"download\": downloads a file (directory downlo"
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/fm/api/v1/contents/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a file or directory permanently.\n\nPath parameter\n--------------\n- path: the path to the file/directory to be deleted\n        relative to the user data root (no default value)\n\nReturn\n------\nNo content (nothing is returned)"
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/fm/api/v1/contents/:destination",
+            "params": [
+              {
+                "name": "destination",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Uploads a file or creates an empty folder.\n\nPath parameter\n--------------\n- destination: the destination path of the upload/folder creation relative to the user data root.\n        destination should point to a (would-be) directory, otherwise NotADirectoryError will occur.\n        (default value is \"/\", the user data root directory itself)\n\nAdditional input\n----------------\n- file: the file to be uploaded (optional)\n    - if a file is attached, uploads the file to the destination path\n        Ret"
+        },
+        {
+          "info": {
+            "name": "Move",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/fm/api/v1/contents/:source",
+            "params": [
+              {
+                "name": "source",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "option",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Moves, renames, or copies a file or directory.\n\nPath parameter\n--------------\n- source: the path to the file/directory to be moved/renamed/copied\n        relative to the user data root (no default value)\n\nQuery parameters\n----------------\n- destination: the path to the destination file/directory (no default value)\n- option: controls the behavior of the API\n    - default (None): moves or renames a file or directory. If the same\n        file/directory already exists in the destination, the API beh"
+        },
+        {
+          "info": {
+            "name": "Get Size",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fm/api/v1/size/",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get Size"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

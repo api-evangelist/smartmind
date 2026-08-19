@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "THANOSQL api file table_template API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "table_template",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Table Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/table_template/",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "latest",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all available table templates\n\nParameters\n----------\n- search: str, default: empty\n    Substring to look for in table template titles\n- order_by: str, default: \"recent\"\n    How the query results should be ordered, there are three possible values:\n    - recent: based on the date of creation, from most recent to oldest\n    - name_asc: based on the name of the table template, from A to Z\n    - name_desc: based on the name of the table template, from Z to A\n- latest: bool, default: False\n "
+        },
+        {
+          "info": {
+            "name": "Get Table Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/table_template/:table_template_name",
+            "params": [
+              {
+                "name": "table_template_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves table template(s) by name. User may choose to request only the\nlatest table template or a template with a certain version.\n\nParameters\n----------\n- table_template_name: the name of the table template\n- version: the version of the table template that the user wants to get\n    User can fill in 'latest' if they want to retrieve the latest version of the table template\n    User can leave the version parameter blank if they want to get all versions of the table template\n\nReturns\n-------\nA T"
+        },
+        {
+          "info": {
+            "name": "Create Table Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/table_template/:table_template_name",
+            "params": [
+              {
+                "name": "table_template_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates table template from an input and saves it into\nschema registry (table_template table in user database).\n\nParameters\n----------\n- table_template_name: the name of the table template\n- body: the body of the request, consisting of the table template body\n\nReturns\n-------\nA TableTemplate Pydantic object."
+        },
+        {
+          "info": {
+            "name": "Delete Table Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/table_template/:table_template_name",
+            "params": [
+              {
+                "name": "table_template_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes table template of a certain name and version from the database.\n\nParameters\n----------\n- table_template_name: the name of the table template\n- version: the version of the table template that the user wants to delete\n    User can leave the version parameter blank if they want to delete all versions of the table template\n\nReturns\n-------\nA TableTemplateMessage Pydantic object containing a\nsuccess message and the table template name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

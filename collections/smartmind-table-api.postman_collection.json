@@ -1,0 +1,2471 @@
+{
+  "item": [
+    {
+      "id": "99c99823-b3fe-4058-a5ea-8865105351ae",
+      "name": "table",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "029367c2-b2f0-48ff-9a67-4072ab941481",
+          "name": "Get Tables",
+          "request": {
+            "name": "Get Tables",
+            "description": {
+              "content": "Gets the paginated list of all the tables from the given schema. If no\nschema is provided then the function retreives all of the tables from\nall of the schemas. pg_catalog and information_schema related tables are\nexempted, unless specified. The API can only return 100 tables at a time,\nstarting from the offset number specified.\n\nParameters\n----------\n- schema : str, default None\n    The schema to retrieve the tables from. If None is\n    provided, refers to all schemas.\n- verbose: bool, default False\n    Whether to include only base information or verbose information on the tables.\n- offset: int, default 0\n    The offset position of where to select the tables from.\n- limit: int, default 100\n    The number of tables to retrieve. This value must range from 0 and 100.\n\nReturns\n-------\nA TablesResponse Pydantic object containing a List of\neither Table Pydantic or Base Table Pydantic models depending\non the verbose parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "verbose",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aed19af4-5e27-4064-856c-9e00e46444cc",
+              "name": "Successful Response (when verbose is set to True)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verbose",
+                      "value": "false"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tables\": [\n    {\n      \"name\": \"string\",\n      \"schema\": \"string\",\n      \"columns\": [\n        {\n          \"id\": 0,\n          \"default\": \"string\",\n          \"is_nullable\": true,\n          \"type\": \"string\",\n          \"name\": \"string\"\n        }\n      ],\n      \"constraints\": {\n        \"primary_key\": {\n          \"name\": \"\",\n          \"columns\": []\n        },\n        \"foreign_keys\": [\n          {\n            \"name\": \"string\",\n            \"reference_schema\": \"public\",\n            \"reference_column\": \"string\",\n            \"reference_table\": \"string\",\n            \"column\": \"string\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f06cd4ff-5b35-4e21-8ba4-c040d9945615",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verbose",
+                      "value": "false"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa82d1d2-536a-4c02-8937-77ce116bae47",
+          "name": "Get Table",
+          "request": {
+            "name": "Get Table",
+            "description": {
+              "content": "Gets the Table object with the specified table_name and\nschema. If the schema is not specified, it automatically\ndefaults to public.\n\nParameters\n----------\ntable_name: str\nschema : str, default public\n    The schema to retrieve the tables from. If no parameter is\n    provided, assigned as public.\n\nReturns\n-------\nA TableResponse Pydantic object containing a Table Pydantic object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e5f619e2-b253-40d4-afb5-8cc4378909a5",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": {\n    \"name\": \"string\",\n    \"schema\": \"string\",\n    \"columns\": [\n      {\n        \"type\": \"string\",\n        \"name\": \"string\",\n        \"id\": 3889,\n        \"default\": \"string\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"string\",\n        \"name\": \"string\",\n        \"id\": 5615,\n        \"default\": \"string\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"string\",\n          \"reference_table\": \"string\",\n          \"column\": \"string\",\n          \"name\": \"string\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"string\",\n          \"reference_table\": \"string\",\n          \"column\": \"string\",\n          \"name\": \"string\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fffdad86-c171-483b-88f0-9a358d0c19d9",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "375b3375-87e7-41d4-b85e-801b0c9c65c8",
+          "name": "Update Table",
+          "request": {
+            "name": "Update Table",
+            "description": {
+              "content": "Alters the table specified with the table_name and schema to the\nTable object specified in the body parameter.\n\nInstructions\n------------\nIn order to update an object, simply change the values of the Table objects\nin the request body. To delete, simply remove the object from the request body.\nTo add, add the desired object to the request body.\n\nThe query is built in the following order:\n\nDROP UNIQUE CONSTRAINT -> DROP PRIMARY KEY -> DROP FOREIGN KEY -> DROP COLUMN -> ADD COLUMN -> ALTER COLUMN ->\nRENAME COLUMN -> ADD UNIQUE CONSTRAINT -> ADD PRIMARY KEY -> ADD FOREIGN KEY -> RENAME TABLE -> SET SCHEMA\n\n### Caution:\nFor the columns, it is important to note that the id is the\nunique key used to identify the column. If you remove the column_id key\nfrom the Column object, it will be dropped from the database and be recreated.\n\nSince there is a given order for execution, if your alter requires to not follow the\norder above, make sure to separate the API calls.\n\n\nParameters\n----------\n- table_name: str,\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- body: AlterTableRequest, default None\n\nReturns\n-------\nA Table Pydantic object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table\": {\n    \"name\": \"<string>\",\n    \"schema\": \"<string>\",\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d80fc034-110c-4be8-8298-824b0fd1f051",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": {\n    \"name\": \"<string>\",\n    \"schema\": \"<string>\",\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": {\n    \"name\": \"<string>\",\n    \"schema\": \"<string>\",\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f0717a5-dbf7-407c-b65a-d16d4f0fb131",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": {\n    \"name\": \"<string>\",\n    \"schema\": \"<string>\",\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6e5451b-d687-470d-a7d1-773e5f1485c9",
+          "name": "Create Table",
+          "request": {
+            "name": "Create Table",
+            "description": {
+              "content": "Creates the table in the database using the BaseTableObjects object\nprovided in the request body, the table_name, and schema.\n\n*Note*: When adding Column objects to the list of columns,\nthere is no need to specify the id since the id just refers\nto the ordinal position of the column. Additionally if\nthe table is created with an empty body, an empty table will\nbe created. If no table_name is specified, the table will be\ncreated with a random uuid string.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- if_not_exists: bool, default False\n    Whether to throw an error if a table of the same name already\n    exists. When set to False, an error will be shown. When True,\n    the table will only be created if it does not exist already.\n    Otherwise, do nothing.\n- body: CreateTableRequest, default None\nReturns\n-------\nA Table Pydantic object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                },
+                {
+                  "disabled": false,
+                  "key": "if_not_exists",
+                  "value": "false"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table\": {\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f91ebc48-bb06-408a-b6d5-e62b4df74f9e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "if_not_exists",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": {\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": {\n    \"name\": \"<string>\",\n    \"schema\": \"<string>\",\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f20505b-decd-45d4-97e0-c16ae4e992ef",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "if_not_exists",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": {\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "afe5e819-f947-4a11-861f-dfc286a71824",
+          "name": "Delete Table",
+          "request": {
+            "name": "Delete Table",
+            "description": {
+              "content": "Deletes the table specified by the table_name and schema.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n\nReturns\n-------\nA TableMessage Pydantic object containing a success message and the table_name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1efc531c-c252-445b-b26c-e04d0dc5689b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"table_name\": \"string\",\n  \"schema\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1dc3d2d9-7dc3-4a8a-85f8-c6ed80975acc",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b45e4b9c-ab4d-42cb-af95-66bad6853a06",
+          "name": "Get Records",
+          "request": {
+            "name": "Get Records",
+            "description": {
+              "content": "Returns the paginated records of the given table specified by the table_name and\nschema. The API can only return 100 records at a time, starting from the offset\nnumber specified.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- offset: int, default 0\n    The offset position of where to select the records from.\n- limit: int, default 100\n    The number of records to retrieve. This value must range from\n    0 and 100.\n\nReturns\n-------\nA TableRecordsResponse Pydantic object containing\nthe records and total number of records.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name",
+                "records"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "508d410a-1fd4-48c2-9ef7-a12a7480806a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "records"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 431\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a5d81c0-b5f2-4ccc-8632-1f9a232ff330",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "records"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a196df85-5e3e-487b-aaa2-5e12a3b812c1",
+          "name": "Insert Records",
+          "request": {
+            "name": "Insert Records",
+            "description": {
+              "content": "Inserts the records in the input body into a table in a specified schema.\n\nParameters\n----------\n- table_name: str\n- records: list[dict]\n    The list of key-value pairs to be inserted to the table\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is provided, defaults to \"public\".\n- on_conflict: str, default \"fail\"\n    What to do in case (an) inserted value(s) generate(s) a conflict due to the target table's\n    unique constraint. Available options:\n      - \"fail\" -> gives an error, insertion is only possible if unique constraint(s)\n          is(are) not violated\n      - \"skip\" -> does nothing on conflicted record, doesn't perform the insertion for that\n          particular record but doesn't cancel the entire insertion process\n      - if user inputs anything other than these two, the server will throw an exception\n\nReturns\n-------\nA Table Pydantic object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name",
+                "records"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                },
+                {
+                  "disabled": false,
+                  "key": "on_conflict",
+                  "value": "fail"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"<object>\",\n  \"<object>\"\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "05dbac1b-5614-42b8-aa6f-f5c2edb90189",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "records"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "on_conflict",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"<object>\",\n  \"<object>\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": {\n    \"name\": \"<string>\",\n    \"schema\": \"<string>\",\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "965a1e88-bbec-4dd0-b186-48767445288f",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "records"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "on_conflict",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"<object>\",\n  \"<object>\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a5bd219-6459-4cbe-bd6a-366b4c538f74",
+          "name": "Get records as a CSV file",
+          "request": {
+            "name": "Get records as a CSV file",
+            "description": {
+              "content": "Returns the csv of the given table specified by the table_name and\nschema.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- timezone_offset: int\n    The timezone offset applied to the datetime formats. Defaults to 9 (KST).\n\nReturns\n-------\nA StreamingResponse Pydantic object that iterates through the csv.\nIf the table is empty, returns a Response object with code 204.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name",
+                "records",
+                "csv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone_offset",
+                  "value": "9"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9a9d0fe2-b6f6-4315-95b0-2b58f0b1df93",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "records",
+                    "csv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "timezone_offset",
+                      "value": "9"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01876a5c-712b-4455-9514-4487c3638c21",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "records",
+                    "csv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "timezone_offset",
+                      "value": "9"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6c07627-ffa9-49b6-b0cd-9d9ae22e5ce6",
+          "name": "Upload Table From Csv",
+          "request": {
+            "name": "Upload Table From Csv",
+            "description": {
+              "content": "Inserts records from a CSV file into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -> creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -> appends records into an existing table (columns must match in order to not generate an exception)\n  - \"replace\" -> deletes an existing table and creates a new one with the same name\n  - if user inputs anything other than these three, the server will throw an exception\n- file: .csv file to be inserted\n- body: the request body if table template columns were to be added manually, optional\n\nReturns\n-------\nA Table Pydantic object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name",
+                "upload",
+                "csv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                },
+                {
+                  "disabled": false,
+                  "key": "if_exists",
+                  "value": "fail"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "body",
+                  "value": "{\"table\":{\"columns\":[{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true},{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true}],\"constraints\":{\"unique\":[{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}],\"primary_key\":{\"name\":\"\"},\"foreign_keys\":[{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}]}}}",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "869f3413-a008-41b5-bb47-54d644ad35dc",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "upload",
+                    "csv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "if_exists",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "body",
+                      "value": "{\"table\":{\"columns\":[{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true},{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true}],\"constraints\":{\"unique\":[{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}],\"primary_key\":{\"name\":\"\"},\"foreign_keys\":[{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}]}}}",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": {\n    \"name\": \"<string>\",\n    \"schema\": \"<string>\",\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "274bd9f7-0f52-4bb0-8d8b-e1e4cb28b52c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "upload",
+                    "csv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "if_exists",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "body",
+                      "value": "{\"table\":{\"columns\":[{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true},{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true}],\"constraints\":{\"unique\":[{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}],\"primary_key\":{\"name\":\"\"},\"foreign_keys\":[{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}]}}}",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b4daeed-62cf-481e-b976-502f2fe4c170",
+          "name": "Upload Table From Excel",
+          "request": {
+            "name": "Upload Table From Excel",
+            "description": {
+              "content": "Inserts records from a type of Excel file into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -> creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -> appends records into an existing table (columns must match in order to not generate an exception)\n  - \"replace\" -> deletes an existing table and creates a new one with the same name\n  - if user inputs anything other than these three, the server will throw an exception\n- file: Excel file to be inserted\n- body: the request body if table schema columns were to be added manually, optional\n\nReturns\n-------\nA Table Pydantic object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name",
+                "upload",
+                "excel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                },
+                {
+                  "disabled": false,
+                  "key": "if_exists",
+                  "value": "fail"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "body",
+                  "value": "{\"table\":{\"columns\":[{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true},{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true}],\"constraints\":{\"unique\":[{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}],\"primary_key\":{\"name\":\"\"},\"foreign_keys\":[{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}]}}}",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ffe49a91-cc09-483e-a635-7dd8cf606d72",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "upload",
+                    "excel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "if_exists",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "body",
+                      "value": "{\"table\":{\"columns\":[{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true},{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true}],\"constraints\":{\"unique\":[{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}],\"primary_key\":{\"name\":\"\"},\"foreign_keys\":[{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}]}}}",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": {\n    \"name\": \"<string>\",\n    \"schema\": \"<string>\",\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1b79445-44a1-43cb-a16e-7e7ee0f2d7bc",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "upload",
+                    "excel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "if_exists",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "body",
+                      "value": "{\"table\":{\"columns\":[{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true},{\"type\":\"<string>\",\"name\":\"<string>\",\"default\":\"<string>\",\"is_nullable\":true}],\"constraints\":{\"unique\":[{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"columns\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}],\"primary_key\":{\"name\":\"\"},\"foreign_keys\":[{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}},{\"reference_column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_table\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"column\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"name\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"},\"reference_schema\":{\"value\":\"<Error: Too many levels of nesting to fake this schema>\"}}]}}}",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6fe263d7-4838-45cb-b925-be2bb31f7ea0",
+          "name": "Upload Table From Json",
+          "request": {
+            "name": "Upload Table From Json",
+            "description": {
+              "content": "Inserts records from JSON into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -> creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -> appends records into an existing table (columns must match in order to not generate an exception)\n  - \"replace\" -> deletes an existing table and creates a new one with the same name\n  - if user inputs anything other than these three, the server will throw an exception\n- body:\n  - \"table\": optionally specify a table object is to be added manually.\n  - \"data\": where the json object with the records format (list of json objects) is specified.\n\nReturns\n-------\nA TableResponse Pydantic object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "table",
+                ":table_name",
+                "upload",
+                "json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "schema",
+                  "value": "public"
+                },
+                {
+                  "disabled": false,
+                  "key": "if_exists",
+                  "value": "fail"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "table_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table\": {\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "277e3037-3606-4d20-acbd-cbeca4615318",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "upload",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "if_exists",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": {\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"table\": {\n    \"name\": \"<string>\",\n    \"schema\": \"<string>\",\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "306fa311-6559-4783-8b5f-7f3cf9d8b81c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "table",
+                    ":table_name",
+                    "upload",
+                    "json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "schema",
+                      "value": "public"
+                    },
+                    {
+                      "key": "if_exists",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "table_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"table\": {\n    \"columns\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"default\": \"<string>\",\n        \"is_nullable\": true\n      }\n    ],\n    \"constraints\": {\n      \"unique\": [\n        {\n          \"name\": \"\"\n        },\n        {\n          \"name\": \"\"\n        }\n      ],\n      \"primary_key\": {\n        \"name\": \"\"\n      },\n      \"foreign_keys\": [\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        },\n        {\n          \"reference_column\": \"<string>\",\n          \"reference_table\": \"<string>\",\n          \"column\": \"<string>\",\n          \"name\": \"<string>\",\n          \"reference_schema\": \"public\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "04f3e12e-1ff2-467c-9336-511703d56c3c",
+    "name": "THANOSQL api file table API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "THANOSQL TEST API documentation",
+      "type": "text/plain"
+    }
+  }
+}

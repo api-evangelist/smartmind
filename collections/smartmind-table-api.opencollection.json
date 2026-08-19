@@ -1,0 +1,411 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "THANOSQL api file table API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "table",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Tables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/table/",
+            "params": [
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "verbose",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets the paginated list of all the tables from the given schema. If no\nschema is provided then the function retreives all of the tables from\nall of the schemas. pg_catalog and information_schema related tables are\nexempted, unless specified. The API can only return 100 tables at a time,\nstarting from the offset number specified.\n\nParameters\n----------\n- schema : str, default None\n    The schema to retrieve the tables from. If None is\n    provided, refers to all schemas.\n- verbose: bool, default "
+        },
+        {
+          "info": {
+            "name": "Get Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/table/:table_name",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets the Table object with the specified table_name and\nschema. If the schema is not specified, it automatically\ndefaults to public.\n\nParameters\n----------\ntable_name: str\nschema : str, default public\n    The schema to retrieve the tables from. If no parameter is\n    provided, assigned as public.\n\nReturns\n-------\nA TableResponse Pydantic object containing a Table Pydantic object."
+        },
+        {
+          "info": {
+            "name": "Create Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/table/:table_name",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "if_not_exists",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates the table in the database using the BaseTableObjects object\nprovided in the request body, the table_name, and schema.\n\n*Note*: When adding Column objects to the list of columns,\nthere is no need to specify the id since the id just refers\nto the ordinal position of the column. Additionally if\nthe table is created with an empty body, an empty table will\nbe created. If no table_name is specified, the table will be\ncreated with a random uuid string.\n\nParameters\n----------\n- table_name: str\n-"
+        },
+        {
+          "info": {
+            "name": "Update Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/table/:table_name",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Alters the table specified with the table_name and schema to the\nTable object specified in the body parameter.\n\nInstructions\n------------\nIn order to update an object, simply change the values of the Table objects\nin the request body. To delete, simply remove the object from the request body.\nTo add, add the desired object to the request body.\n\nThe query is built in the following order:\n\nDROP UNIQUE CONSTRAINT -> DROP PRIMARY KEY -> DROP FOREIGN KEY -> DROP COLUMN -> ADD COLUMN -> ALTER COLUMN -"
+        },
+        {
+          "info": {
+            "name": "Delete Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/table/:table_name",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes the table specified by the table_name and schema.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n\nReturns\n-------\nA TableMessage Pydantic object containing a success message and the table_name."
+        },
+        {
+          "info": {
+            "name": "Get Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/table/:table_name/records",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the paginated records of the given table specified by the table_name and\nschema. The API can only return 100 records at a time, starting from the offset\nnumber specified.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- offset: int, default 0\n    The offset position of where to select the records from.\n- limit: int, default 100\n    The number of records to retriev"
+        },
+        {
+          "info": {
+            "name": "Insert Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/table/:table_name/records",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "on_conflict",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Inserts the records in the input body into a table in a specified schema.\n\nParameters\n----------\n- table_name: str\n- records: list[dict]\n    The list of key-value pairs to be inserted to the table\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is provided, defaults to \"public\".\n- on_conflict: str, default \"fail\"\n    What to do in case (an) inserted value(s) generate(s) a conflict due to the target table's\n    unique constraint. Available options:\n   "
+        },
+        {
+          "info": {
+            "name": "Get records as a CSV file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/table/:table_name/records/csv",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timezone_offset",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the csv of the given table specified by the table_name and\nschema.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- timezone_offset: int\n    The timezone offset applied to the datetime formats. Defaults to 9 (KST).\n\nReturns\n-------\nA StreamingResponse Pydantic object that iterates through the csv.\nIf the table is empty, returns a Response object with code 204."
+        },
+        {
+          "info": {
+            "name": "Upload Table From Csv",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/table/:table_name/upload/csv",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "if_exists",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Inserts records from a CSV file into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -> creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -> appends records into an existing tabl"
+        },
+        {
+          "info": {
+            "name": "Upload Table From Excel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/table/:table_name/upload/excel",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "if_exists",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Inserts records from a type of Excel file into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -> creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -> appends records into an exi"
+        },
+        {
+          "info": {
+            "name": "Upload Table From Json",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/table/:table_name/upload/json",
+            "params": [
+              {
+                "name": "table_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schema",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "if_exists",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Inserts records from JSON into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -> creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -> appends records into an existing table (col"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
