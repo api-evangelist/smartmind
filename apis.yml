@@ -42,6 +42,17 @@ modified: '2026-07-21'
 tags:
 - Company
 - Artificial Intelligence
+- Machine-Learning
+- Database
+- Analytics
+- Data
+- SQL
+- Ontology
+- RAG
+- Enterprise AI
+tags_raw:
+- Company
+- Artificial Intelligence
 - Machine Learning
 - Database
 - Analytics
@@ -57,6 +68,8 @@ apis:
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   tags:
+  - File
+  tags_raw:
   - file
   properties:
   - type: OpenAPI
@@ -69,6 +82,8 @@ apis:
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   tags:
+  - Health
+  tags_raw:
   - health
   properties:
   - type: OpenAPI
@@ -93,6 +108,8 @@ apis:
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   tags:
+  - Query
+  tags_raw:
   - query
   properties:
   - type: OpenAPI
@@ -105,6 +122,8 @@ apis:
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   tags:
+  - Schema
+  tags_raw:
   - schema
   properties:
   - type: OpenAPI
@@ -117,6 +136,8 @@ apis:
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   tags:
+  - Table
+  tags_raw:
   - table
   properties:
   - type: OpenAPI
@@ -128,7 +149,8 @@ apis:
   description: The table_template API from SmartMind — 2 operation(s) for table_template.
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
-  tags:
+  tags: []
+  tags_raw:
   - table_template
   properties:
   - type: OpenAPI
@@ -141,6 +163,8 @@ apis:
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   tags:
+  - Views
+  tags_raw:
   - view
   properties:
   - type: OpenAPI
