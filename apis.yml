@@ -148,7 +148,7 @@ apis:
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   tags:
-  - table
+  - Table
   tags_raw:
   - table
   properties:
