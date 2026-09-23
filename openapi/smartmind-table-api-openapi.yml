@@ -1,17 +1,59 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: THANOSQL api file table API
+  title: THANOSQL Table API
   description: THANOSQL TEST API documentation
   version: '1.0'
 tags:
-- name: table
+- name: Table
 paths:
   /api/v1/table/:
     get:
       tags:
-      - table
+      - Table
       summary: Get Tables
-      description: "Gets the paginated list of all the tables from the given schema. If no\nschema is provided then the function retreives all of the tables from\nall of the schemas. pg_catalog and information_schema related tables are\nexempted, unless specified. The API can only return 100 tables at a time,\nstarting from the offset number specified.\n\nParameters\n----------\n- schema : str, default None\n    The schema to retrieve the tables from. If None is\n    provided, refers to all schemas.\n- verbose: bool, default False\n    Whether to include only base information or verbose information on the tables.\n- offset: int, default 0\n    The offset position of where to select the tables from.\n- limit: int, default 100\n    The number of tables to retrieve. This value must range from 0 and 100.\n\nReturns\n-------\nA TablesResponse Pydantic object containing a List of\neither Table Pydantic or Base Table Pydantic models depending\non the verbose parameter."
+      description: 'Gets the paginated list of all the tables from the given schema. If no
+
+        schema is provided then the function retreives all of the tables from
+
+        all of the schemas. pg_catalog and information_schema related tables are
+
+        exempted, unless specified. The API can only return 100 tables at a time,
+
+        starting from the offset number specified.
+
+
+        Parameters
+
+        ----------
+
+        - schema : str, default None
+
+        The schema to retrieve the tables from. If None is
+
+        provided, refers to all schemas.
+
+        - verbose: bool, default False
+
+        Whether to include only base information or verbose information on the tables.
+
+        - offset: int, default 0
+
+        The offset position of where to select the tables from.
+
+        - limit: int, default 100
+
+        The number of tables to retrieve. This value must range from 0 and 100.
+
+
+        Returns
+
+        -------
+
+        A TablesResponse Pydantic object containing a List of
+
+        either Table Pydantic or Base Table Pydantic models depending
+
+        on the verbose parameter.'
       operationId: get_tables_api_v1_table__get
       parameters:
       - required: false
@@ -78,9 +120,33 @@ paths:
   /api/v1/table/{table_name}:
     get:
       tags:
-      - table
+      - Table
       summary: Get Table
-      description: "Gets the Table object with the specified table_name and\nschema. If the schema is not specified, it automatically\ndefaults to public.\n\nParameters\n----------\ntable_name: str\nschema : str, default public\n    The schema to retrieve the tables from. If no parameter is\n    provided, assigned as public.\n\nReturns\n-------\nA TableResponse Pydantic object containing a Table Pydantic object."
+      description: 'Gets the Table object with the specified table_name and
+
+        schema. If the schema is not specified, it automatically
+
+        defaults to public.
+
+
+        Parameters
+
+        ----------
+
+        table_name: str
+
+        schema : str, default public
+
+        The schema to retrieve the tables from. If no parameter is
+
+        provided, assigned as public.
+
+
+        Returns
+
+        -------
+
+        A TableResponse Pydantic object containing a Table Pydantic object.'
       operationId: get_table_api_v1_table__table_name__get
       parameters:
       - required: true
@@ -113,9 +179,66 @@ paths:
       - Bearer Auth: []
     put:
       tags:
-      - table
+      - Table
       summary: Update Table
-      description: "Alters the table specified with the table_name and schema to the\nTable object specified in the body parameter.\n\nInstructions\n------------\nIn order to update an object, simply change the values of the Table objects\nin the request body. To delete, simply remove the object from the request body.\nTo add, add the desired object to the request body.\n\nThe query is built in the following order:\n\nDROP UNIQUE CONSTRAINT -> DROP PRIMARY KEY -> DROP FOREIGN KEY -> DROP COLUMN -> ADD COLUMN -> ALTER COLUMN ->\nRENAME COLUMN -> ADD UNIQUE CONSTRAINT -> ADD PRIMARY KEY -> ADD FOREIGN KEY -> RENAME TABLE -> SET SCHEMA\n\n### Caution:\nFor the columns, it is important to note that the id is the\nunique key used to identify the column. If you remove the column_id key\nfrom the Column object, it will be dropped from the database and be recreated.\n\nSince there is a given order for execution, if your alter requires to not follow the\norder above, make sure to separate the API calls.\n\n\nParameters\n----------\n- table_name: str,\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- body: AlterTableRequest, default None\n\nReturns\n-------\nA Table Pydantic object."
+      description: 'Alters the table specified with the table_name and schema to the
+
+        Table object specified in the body parameter.
+
+
+        Instructions
+
+        ------------
+
+        In order to update an object, simply change the values of the Table objects
+
+        in the request body. To delete, simply remove the object from the request body.
+
+        To add, add the desired object to the request body.
+
+
+        The query is built in the following order:
+
+
+        DROP UNIQUE CONSTRAINT -> DROP PRIMARY KEY -> DROP FOREIGN KEY -> DROP COLUMN -> ADD COLUMN -> ALTER COLUMN ->
+
+        RENAME COLUMN -> ADD UNIQUE CONSTRAINT -> ADD PRIMARY KEY -> ADD FOREIGN KEY -> RENAME TABLE -> SET SCHEMA
+
+
+        ### Caution:
+
+        For the columns, it is important to note that the id is the
+
+        unique key used to identify the column. If you remove the column_id key
+
+        from the Column object, it will be dropped from the database and be recreated.
+
+
+        Since there is a given order for execution, if your alter requires to not follow the
+
+        order above, make sure to separate the API calls.
+
+
+        Parameters
+
+        ----------
+
+        - table_name: str,
+
+        - schema : str, default "public"
+
+        The schema to retrieve the tables from. If no parameter is
+
+        provided, defaults to "public".
+
+        - body: AlterTableRequest, default None
+
+
+        Returns
+
+        -------
+
+        A Table Pydantic object.'
       operationId: update_table_api_v1_table__table_name__put
       parameters:
       - required: true
@@ -154,9 +277,55 @@ paths:
       - Bearer Auth: []
     post:
       tags:
-      - table
+      - Table
       summary: Create Table
-      description: "Creates the table in the database using the BaseTableObjects object\nprovided in the request body, the table_name, and schema.\n\n*Note*: When adding Column objects to the list of columns,\nthere is no need to specify the id since the id just refers\nto the ordinal position of the column. Additionally if\nthe table is created with an empty body, an empty table will\nbe created. If no table_name is specified, the table will be\ncreated with a random uuid string.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- if_not_exists: bool, default False\n    Whether to throw an error if a table of the same name already\n    exists. When set to False, an error will be shown. When True,\n    the table will only be created if it does not exist already.\n    Otherwise, do nothing.\n- body: CreateTableRequest, default None\nReturns\n-------\nA Table Pydantic object."
+      description: 'Creates the table in the database using the BaseTableObjects object
+
+        provided in the request body, the table_name, and schema.
+
+
+        *Note*: When adding Column objects to the list of columns,
+
+        there is no need to specify the id since the id just refers
+
+        to the ordinal position of the column. Additionally if
+
+        the table is created with an empty body, an empty table will
+
+        be created. If no table_name is specified, the table will be
+
+        created with a random uuid string.
+
+
+        Parameters
+
+        ----------
+
+        - table_name: str
+
+        - schema : str, default "public"
+
+        The schema to retrieve the tables from. If no parameter is
+
+        provided, defaults to "public".
+
+        - if_not_exists: bool, default False
+
+        Whether to throw an error if a table of the same name already
+
+        exists. When set to False, an error will be shown. When True,
+
+        the table will only be created if it does not exist already.
+
+        Otherwise, do nothing.
+
+        - body: CreateTableRequest, default None
+
+        Returns
+
+        -------
+
+        A Table Pydantic object.'
       operationId: create_table_api_v1_table__table_name__post
       parameters:
       - required: true
@@ -202,9 +371,29 @@ paths:
       - Bearer Auth: []
     delete:
       tags:
-      - table
+      - Table
       summary: Delete Table
-      description: "Deletes the table specified by the table_name and schema.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n\nReturns\n-------\nA TableMessage Pydantic object containing a success message and the table_name."
+      description: 'Deletes the table specified by the table_name and schema.
+
+
+        Parameters
+
+        ----------
+
+        - table_name: str
+
+        - schema : str, default "public"
+
+        The schema to retrieve the tables from. If no parameter is
+
+        provided, defaults to "public".
+
+
+        Returns
+
+        -------
+
+        A TableMessage Pydantic object containing a success message and the table_name.'
       operationId: delete_table_api_v1_table__table_name__delete
       parameters:
       - required: true
@@ -238,9 +427,45 @@ paths:
   /api/v1/table/{table_name}/records:
     get:
       tags:
-      - table
+      - Table
       summary: Get Records
-      description: "Returns the paginated records of the given table specified by the table_name and\nschema. The API can only return 100 records at a time, starting from the offset\nnumber specified.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- offset: int, default 0\n    The offset position of where to select the records from.\n- limit: int, default 100\n    The number of records to retrieve. This value must range from\n    0 and 100.\n\nReturns\n-------\nA TableRecordsResponse Pydantic object containing\nthe records and total number of records."
+      description: 'Returns the paginated records of the given table specified by the table_name and
+
+        schema. The API can only return 100 records at a time, starting from the offset
+
+        number specified.
+
+
+        Parameters
+
+        ----------
+
+        - table_name: str
+
+        - schema : str, default "public"
+
+        The schema to retrieve the tables from. If no parameter is
+
+        provided, defaults to "public".
+
+        - offset: int, default 0
+
+        The offset position of where to select the records from.
+
+        - limit: int, default 100
+
+        The number of records to retrieve. This value must range from
+
+        0 and 100.
+
+
+        Returns
+
+        -------
+
+        A TableRecordsResponse Pydantic object containing
+
+        the records and total number of records.'
       operationId: get_records_api_v1_table__table_name__records_get
       parameters:
       - required: true
@@ -287,9 +512,47 @@ paths:
       - Bearer Auth: []
     post:
       tags:
-      - table
+      - Table
       summary: Insert Records
-      description: "Inserts the records in the input body into a table in a specified schema.\n\nParameters\n----------\n- table_name: str\n- records: list[dict]\n    The list of key-value pairs to be inserted to the table\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is provided, defaults to \"public\".\n- on_conflict: str, default \"fail\"\n    What to do in case (an) inserted value(s) generate(s) a conflict due to the target table's\n    unique constraint. Available options:\n      - \"fail\" -> gives an error, insertion is only possible if unique constraint(s)\n          is(are) not violated\n      - \"skip\" -> does nothing on conflicted record, doesn't perform the insertion for that\n          particular record but doesn't cancel the entire insertion process\n      - if user inputs anything other than these two, the server will throw an exception\n\nReturns\n-------\nA Table Pydantic object."
+      description: 'Inserts the records in the input body into a table in a specified schema.
+
+
+        Parameters
+
+        ----------
+
+        - table_name: str
+
+        - records: list[dict]
+
+        The list of key-value pairs to be inserted to the table
+
+        - schema : str, default "public"
+
+        The schema to retrieve the tables from. If no parameter is provided, defaults to "public".
+
+        - on_conflict: str, default "fail"
+
+        What to do in case (an) inserted value(s) generate(s) a conflict due to the target table''s
+
+        unique constraint. Available options:
+
+        - "fail" -> gives an error, insertion is only possible if unique constraint(s)
+
+        is(are) not violated
+
+        - "skip" -> does nothing on conflicted record, doesn''t perform the insertion for that
+
+        particular record but doesn''t cancel the entire insertion process
+
+        - if user inputs anything other than these two, the server will throw an exception
+
+
+        Returns
+
+        -------
+
+        A Table Pydantic object.'
       operationId: insert_records_api_v1_table__table_name__records_post
       parameters:
       - required: true
@@ -339,9 +602,37 @@ paths:
   /api/v1/table/{table_name}/records/csv:
     get:
       tags:
-      - table
+      - Table
       summary: Get records as a CSV file
-      description: "Returns the csv of the given table specified by the table_name and\nschema.\n\nParameters\n----------\n- table_name: str\n- schema : str, default \"public\"\n    The schema to retrieve the tables from. If no parameter is\n    provided, defaults to \"public\".\n- timezone_offset: int\n    The timezone offset applied to the datetime formats. Defaults to 9 (KST).\n\nReturns\n-------\nA StreamingResponse Pydantic object that iterates through the csv.\nIf the table is empty, returns a Response object with code 204."
+      description: 'Returns the csv of the given table specified by the table_name and
+
+        schema.
+
+
+        Parameters
+
+        ----------
+
+        - table_name: str
+
+        - schema : str, default "public"
+
+        The schema to retrieve the tables from. If no parameter is
+
+        provided, defaults to "public".
+
+        - timezone_offset: int
+
+        The timezone offset applied to the datetime formats. Defaults to 9 (KST).
+
+
+        Returns
+
+        -------
+
+        A StreamingResponse Pydantic object that iterates through the csv.
+
+        If the table is empty, returns a Response object with code 204.'
       operationId: get_records_as_csv_api_v1_table__table_name__records_csv_get
       parameters:
       - required: true
@@ -381,9 +672,41 @@ paths:
   /api/v1/table/{table_name}/upload/csv:
     post:
       tags:
-      - table
+      - Table
       summary: Upload Table From Csv
-      description: "Inserts records from a CSV file into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -> creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -> appends records into an existing table (columns must match in order to not generate an exception)\n  - \"replace\" -> deletes an existing table and creates a new one with the same name\n  - if user inputs anything other than these three, the server will throw an exception\n- file: .csv file to be inserted\n- body: the request body if table template columns were to be added manually, optional\n\nReturns\n-------\nA Table Pydantic object."
+      description: 'Inserts records from a CSV file into a table previously created using create_table,
+
+        or creates a new table from it.
+
+
+        Parameters
+
+        ----------
+
+        - table_name: the name of the table created by create_table
+
+        - schema: database schema, default "public"
+
+        - if_exists: what to do if table of the same name already exists, default "fail". available options:
+
+        - "fail" -> creates a new table, only possible if no table of the same name exists (fails otherwise)
+
+        - "append" -> appends records into an existing table (columns must match in order to not generate an exception)
+
+        - "replace" -> deletes an existing table and creates a new one with the same name
+
+        - if user inputs anything other than these three, the server will throw an exception
+
+        - file: .csv file to be inserted
+
+        - body: the request body if table template columns were to be added manually, optional
+
+
+        Returns
+
+        -------
+
+        A Table Pydantic object.'
       operationId: upload_table_from_csv_api_v1_table__table_name__upload_csv_post
       parameters:
       - required: true
@@ -430,9 +753,41 @@ paths:
   /api/v1/table/{table_name}/upload/excel:
     post:
       tags:
-      - table
+      - Table
       summary: Upload Table From Excel
-      description: "Inserts records from a type of Excel file into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -> creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -> appends records into an existing table (columns must match in order to not generate an exception)\n  - \"replace\" -> deletes an existing table and creates a new one with the same name\n  - if user inputs anything other than these three, the server will throw an exception\n- file: Excel file to be inserted\n- body: the request body if table schema columns were to be added manually, optional\n\nReturns\n-------\nA Table Pydantic object."
+      description: 'Inserts records from a type of Excel file into a table previously created using create_table,
+
+        or creates a new table from it.
+
+
+        Parameters
+
+        ----------
+
+        - table_name: the name of the table created by create_table
+
+        - schema: database schema, default "public"
+
+        - if_exists: what to do if table of the same name already exists, default "fail". available options:
+
+        - "fail" -> creates a new table, only possible if no table of the same name exists (fails otherwise)
+
+        - "append" -> appends records into an existing table (columns must match in order to not generate an exception)
+
+        - "replace" -> deletes an existing table and creates a new one with the same name
+
+        - if user inputs anything other than these three, the server will throw an exception
+
+        - file: Excel file to be inserted
+
+        - body: the request body if table schema columns were to be added manually, optional
+
+
+        Returns
+
+        -------
+
+        A Table Pydantic object.'
       operationId: upload_table_from_excel_api_v1_table__table_name__upload_excel_post
       parameters:
       - required: true
@@ -479,9 +834,43 @@ paths:
   /api/v1/table/{table_name}/upload/json:
     post:
       tags:
-      - table
+      - Table
       summary: Upload Table From Json
-      description: "Inserts records from JSON into a table previously created using create_table,\nor creates a new table from it.\n\nParameters\n----------\n- table_name: the name of the table created by create_table\n- schema: database schema, default \"public\"\n- if_exists: what to do if table of the same name already exists, default \"fail\". available options:\n  - \"fail\" -> creates a new table, only possible if no table of the same name exists (fails otherwise)\n  - \"append\" -> appends records into an existing table (columns must match in order to not generate an exception)\n  - \"replace\" -> deletes an existing table and creates a new one with the same name\n  - if user inputs anything other than these three, the server will throw an exception\n- body:\n  - \"table\": optionally specify a table object is to be added manually.\n  - \"data\": where the json object with the records format (list of json objects) is specified.\n\nReturns\n-------\nA TableResponse Pydantic object."
+      description: 'Inserts records from JSON into a table previously created using create_table,
+
+        or creates a new table from it.
+
+
+        Parameters
+
+        ----------
+
+        - table_name: the name of the table created by create_table
+
+        - schema: database schema, default "public"
+
+        - if_exists: what to do if table of the same name already exists, default "fail". available options:
+
+        - "fail" -> creates a new table, only possible if no table of the same name exists (fails otherwise)
+
+        - "append" -> appends records into an existing table (columns must match in order to not generate an exception)
+
+        - "replace" -> deletes an existing table and creates a new one with the same name
+
+        - if user inputs anything other than these three, the server will throw an exception
+
+        - body:
+
+        - "table": optionally specify a table object is to be added manually.
+
+        - "data": where the json object with the records format (list of json objects) is specified.
+
+
+        Returns
+
+        -------
+
+        A TableResponse Pydantic object.'
       operationId: upload_table_from_json_api_v1_table__table_name__upload_json_post
       parameters:
       - required: true
@@ -527,170 +916,6 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    CreateTableRequest:
-      title: CreateTableRequest
-      required:
-      - table
-      type: object
-      properties:
-        table:
-          $ref: '#/components/schemas/BaseTableObjects'
-    TableMessageResponse:
-      title: TableMessageResponse
-      required:
-      - message
-      - table_name
-      - schema
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-        table_name:
-          title: Table Name
-          type: string
-        schema:
-          title: Schema
-          type: string
-    Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post:
-      title: Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post
-      required:
-      - file
-      type: object
-      properties:
-        file:
-          title: File
-          type: string
-          format: binary
-        body:
-          $ref: '#/components/schemas/CreateTableWithFileRequest'
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-    BaseColumn:
-      title: BaseColumn
-      required:
-      - type
-      - name
-      type: object
-      properties:
-        default:
-          title: Default
-          type: string
-        is_nullable:
-          title: Is Nullable
-          type: boolean
-          default: true
-        type:
-          title: Type
-          type: string
-        name:
-          title: Name
-          type: string
-    Column:
-      title: Column
-      required:
-      - type
-      - name
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        default:
-          title: Default
-          type: string
-        is_nullable:
-          title: Is Nullable
-          type: boolean
-          default: true
-        type:
-          title: Type
-          type: string
-        name:
-          title: Name
-          type: string
-    TableResponse:
-      title: TableResponse
-      required:
-      - table
-      type: object
-      properties:
-        table:
-          $ref: '#/components/schemas/Table'
-    Body_upload_table_from_csv_api_v1_table__table_name__upload_csv_post:
-      title: Body_upload_table_from_csv_api_v1_table__table_name__upload_csv_post
-      required:
-      - file
-      type: object
-      properties:
-        file:
-          title: File
-          type: string
-          format: binary
-        body:
-          $ref: '#/components/schemas/CreateTableWithFileRequest'
-    ValidationError:
-      title: ValidationError
-      required:
-      - loc
-      - msg
-      - type
-      type: object
-      properties:
-        loc:
-          title: Location
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-    CreateTableWithJSON:
-      title: CreateTableWithJSON
-      type: object
-      properties:
-        table:
-          $ref: '#/components/schemas/BaseTableObjects'
-        data:
-          title: Data
-          type: array
-          items:
-            type: object
-          default: []
-    CreateTableWithFileRequest:
-      title: CreateTableWithFileRequest
-      required:
-      - table
-      type: object
-      properties:
-        table:
-          $ref: '#/components/schemas/BaseTableObjects'
-    PrimaryKey:
-      title: PrimaryKey
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          default: ''
-        columns:
-          title: Columns
-          type: array
-          items:
-            type: string
-          default: []
     BaseTableObjects:
       title: BaseTableObjects
       type: object
@@ -710,6 +935,14 @@ components:
       properties:
         table:
           $ref: '#/components/schemas/Table'
+    CreateTableRequest:
+      title: CreateTableRequest
+      required:
+      - table
+      type: object
+      properties:
+        table:
+          $ref: '#/components/schemas/BaseTableObjects'
     ForeignKey:
       title: ForeignKey
       required:
@@ -734,6 +967,14 @@ components:
         column:
           title: Column
           type: string
+    CreateTableWithFileRequest:
+      title: CreateTableWithFileRequest
+      required:
+      - table
+      type: object
+      properties:
+        table:
+          $ref: '#/components/schemas/BaseTableObjects'
     Unique:
       title: Unique
       type: object
@@ -748,6 +989,147 @@ components:
           items:
             type: string
           default: []
+    TableRecordsResponse:
+      title: TableRecordsResponse
+      required:
+      - total
+      type: object
+      properties:
+        records:
+          title: Records
+          type: array
+          items:
+            type: object
+        total:
+          title: Total
+          type: integer
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    CreateTableWithJSON:
+      title: CreateTableWithJSON
+      type: object
+      properties:
+        table:
+          $ref: '#/components/schemas/BaseTableObjects'
+        data:
+          title: Data
+          type: array
+          items:
+            type: object
+          default: []
+    Column:
+      title: Column
+      required:
+      - type
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        default:
+          title: Default
+          type: string
+        is_nullable:
+          title: Is Nullable
+          type: boolean
+          default: true
+        type:
+          title: Type
+          type: string
+        name:
+          title: Name
+          type: string
+    BaseColumn:
+      title: BaseColumn
+      required:
+      - type
+      - name
+      type: object
+      properties:
+        default:
+          title: Default
+          type: string
+        is_nullable:
+          title: Is Nullable
+          type: boolean
+          default: true
+        type:
+          title: Type
+          type: string
+        name:
+          title: Name
+          type: string
+    Body_upload_table_from_csv_api_v1_table__table_name__upload_csv_post:
+      title: Body_upload_table_from_csv_api_v1_table__table_name__upload_csv_post
+      required:
+      - file
+      type: object
+      properties:
+        file:
+          title: File
+          type: string
+          format: binary
+        body:
+          $ref: '#/components/schemas/CreateTableWithFileRequest'
+    PrimaryKey:
+      title: PrimaryKey
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        columns:
+          title: Columns
+          type: array
+          items:
+            type: string
+          default: []
+    TableMessageResponse:
+      title: TableMessageResponse
+      required:
+      - message
+      - table_name
+      - schema
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        table_name:
+          title: Table Name
+          type: string
+        schema:
+          title: Schema
+          type: string
+    TableResponse:
+      title: TableResponse
+      required:
+      - table
+      type: object
+      properties:
+        table:
+          $ref: '#/components/schemas/Table'
+    Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post:
+      title: Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post
+      required:
+      - file
+      type: object
+      properties:
+        file:
+          title: File
+          type: string
+          format: binary
+        body:
+          $ref: '#/components/schemas/CreateTableWithFileRequest'
     Table:
       title: Table
       type: object
@@ -765,20 +1147,6 @@ components:
             $ref: '#/components/schemas/Column'
         constraints:
           $ref: '#/components/schemas/Constraints'
-    TableRecordsResponse:
-      title: TableRecordsResponse
-      required:
-      - total
-      type: object
-      properties:
-        records:
-          title: Records
-          type: array
-          items:
-            type: object
-        total:
-          title: Total
-          type: integer
     Constraints:
       title: Constraints
       type: object
@@ -795,8 +1163,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ForeignKey'
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
   securitySchemes:
-    Bearer Auth:
+    Bearer_Auth:
       type: apiKey
       in: header
       name: Authorization

@@ -1,15 +1,15 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: THANOSQL api file metric API
+  title: THANOSQL Metric API
   description: THANOSQL TEST API documentation
   version: '1.0'
 tags:
-- name: metric
+- name: Metric
 paths:
   /api/v1/metric/memory/:
     get:
       tags:
-      - metric
+      - Metric
       summary: Get Memory Metrics
       operationId: get_memory_metrics_api_v1_metric_memory__get
       responses:
@@ -37,7 +37,7 @@ components:
           type: object
           default: {}
   securitySchemes:
-    Bearer Auth:
+    Bearer_Auth:
       type: apiKey
       in: header
       name: Authorization

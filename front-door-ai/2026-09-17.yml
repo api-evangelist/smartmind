@@ -1,0 +1,27 @@
+# Front Door AI Index — smartmind — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: smartmind
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: smartmind-ai.io
+  final_host: www.smartmind-ai.io
+  ownership: own
+  owner: smartmind
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 22
+  host_score: 22
+  density: 48.03
+  words: 458
+  tiers:
+    agentic: 2
+    core: 20
+    model: 0
+  ambiguous: 0
+  top_terms:
+    AI: 20
+    RAG: 1
+    agentic: 1

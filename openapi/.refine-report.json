@@ -1,14 +1,7 @@
 {
   "provider": "smartmind",
   "sources": [
-    "smartmind-file-api-openapi.yml",
-    "smartmind-health-api-openapi.yml",
-    "smartmind-metric-api-openapi.yml",
-    "smartmind-query-api-openapi.yml",
-    "smartmind-schema-api-openapi.yml",
-    "smartmind-table-api-openapi.yml",
-    "smartmind-table-template-api-openapi.yml",
-    "smartmind-view-api-openapi.yml"
+    "_original/smartmind-thanosql-openapi.json"
   ],
   "outputs": [
     "smartmind-file-api-openapi.yml",
@@ -23,6 +16,27 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "smartmind-thanosql-openapi.json: upgraded openapi 3.0.2 -> OpenAPI 3.2.0; renamed 1 component key(s) illegal in 3.x (e.g. Bearer Auth)",
+    "smartmind-thanosql-openapi.json: declared missing tag: file",
+    "smartmind-thanosql-openapi.json: declared missing tag: health",
+    "smartmind-thanosql-openapi.json: declared missing tag: metric",
+    "smartmind-thanosql-openapi.json: declared missing tag: query",
+    "smartmind-thanosql-openapi.json: declared missing tag: schema",
+    "smartmind-thanosql-openapi.json: declared missing tag: table",
+    "smartmind-thanosql-openapi.json: declared missing tag: table_template",
+    "smartmind-thanosql-openapi.json: declared missing tag: view",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "smartmind-file-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smartmind-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smartmind-metric-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smartmind-query-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smartmind-schema-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smartmind-table-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smartmind-table-template-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smartmind-view-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
