@@ -441,101 +441,17 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    QueryTemplate:
-      title: QueryTemplate
+    QueryTemplatesResponse:
+      title: QueryTemplatesResponse
       required:
-      - name
-      - query
+      - query_templates
       type: object
       properties:
-        id:
-          title: Id
-          type: integer
-        name:
-          title: Name
-          type: string
-        query:
-          title: Query
-          type: string
-        parameters:
-          title: Parameters
+        query_templates:
+          title: Query Templates
           type: array
           items:
-            type: string
-          default: []
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        updated_at:
-          title: Updated At
-          type: string
-          format: date-time
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-    QueryTemplateResponse:
-      title: QueryTemplateResponse
-      required:
-      - query_template
-      type: object
-      properties:
-        query_template:
-          $ref: '#/components/schemas/QueryTemplate'
-    CreateQueryTemplateRequest:
-      title: CreateQueryTemplateRequest
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          default: ''
-        query:
-          title: Query
-          type: string
-          default: ''
-    QueryContext:
-      title: QueryContext
-      type: object
-      properties:
-        query_string:
-          title: Query String
-          type: string
-          description: The query string to be executed. Can either be a complete or templated query.
-        template_id:
-          title: Template Id
-          type: integer
-          description: The ID of the query template to be used.
-        template_name:
-          title: Template Name
-          type: string
-          description: The name of the query template to be used.
-        parameters:
-          title: Parameters
-          type: object
-          description: A dictionary of parameters if a templated query is used.
-          default: {}
-    PaginatedQueryLogResponse:
-      title: PaginatedQueryLogResponse
-      required:
-      - query_logs
-      - total
-      type: object
-      properties:
-        query_logs:
-          title: Query Logs
-          type: array
-          items:
-            $ref: '#/components/schemas/QueryLog'
-        total:
-          title: Total
-          type: integer
+            $ref: '#/components/schemas/QueryTemplate'
     QueryTemplateMessageResponse:
       title: QueryTemplateMessageResponse
       required:
@@ -545,59 +461,16 @@ components:
         message:
           title: Message
           type: string
-    QueryLog:
-      title: QueryLog
+    UpdateQueryTemplateRequest:
+      title: UpdateQueryTemplateRequest
       type: object
       properties:
-        query_id:
-          title: Query Id
+        name:
+          title: Name
           type: string
-          description: A unique ID that identifies the query.
-        statement_type:
-          title: Statement Type
-          type: string
-          description: The query type (ex. SELECT, DELETE, etc).
-        start_time:
-          title: Start Time
-          type: string
-          description: The start time of the query execution.
-          format: date-time
-        end_time:
-          title: End Time
-          type: string
-          description: The end time of the query execution.
-          format: date-time
         query:
           title: Query
           type: string
-          description: The query string that was executed.
-          default: ''
-        referer:
-          title: Referer
-          type: string
-          description: Indicates where the REST API call was made from.
-          default: ''
-        state:
-          title: State
-          type: string
-          description: Shows the state of the query execution (either RUNNING or COMPLETE).
-        destination_table_name:
-          title: Destination Table Name
-          type: string
-          description: Shows the table where the results are stored in (If the statement_type is a SELECT, a new destination_table is created. Otherwise, the destination_table_name shows the affected table).
-        destination_schema:
-          title: Destination Schema
-          type: string
-          description: Shows in which schema the destination_table is stored in.
-        error_result:
-          title: Error Result
-          type: string
-          description: Stores the error message if there was an error while executing the query.
-        created_at:
-          title: Created At
-          type: string
-          description: Shows the timestamp of when the query log was created.
-          format: date-time
     QueryLogResponse:
       title: QueryLogResponse
       type: object
@@ -667,27 +540,154 @@ components:
           title: Affected Records
           type: integer
           description: The number of records that are affected by DML or DDL queries.
-    UpdateQueryTemplateRequest:
-      title: UpdateQueryTemplateRequest
+    PaginatedQueryLogResponse:
+      title: PaginatedQueryLogResponse
+      required:
+      - query_logs
+      - total
       type: object
       properties:
+        query_logs:
+          title: Query Logs
+          type: array
+          items:
+            $ref: '#/components/schemas/QueryLog'
+        total:
+          title: Total
+          type: integer
+    QueryTemplate:
+      title: QueryTemplate
+      required:
+      - name
+      - query
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
         name:
           title: Name
           type: string
         query:
           title: Query
           type: string
-    QueryTemplatesResponse:
-      title: QueryTemplatesResponse
-      required:
-      - query_templates
-      type: object
-      properties:
-        query_templates:
-          title: Query Templates
+        parameters:
+          title: Parameters
           type: array
           items:
-            $ref: '#/components/schemas/QueryTemplate'
+            type: string
+          default: []
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+    QueryTemplateResponse:
+      title: QueryTemplateResponse
+      required:
+      - query_template
+      type: object
+      properties:
+        query_template:
+          $ref: '#/components/schemas/QueryTemplate'
+    QueryContext:
+      title: QueryContext
+      type: object
+      properties:
+        query_string:
+          title: Query String
+          type: string
+          description: The query string to be executed. Can either be a complete or templated query.
+        template_id:
+          title: Template Id
+          type: integer
+          description: The ID of the query template to be used.
+        template_name:
+          title: Template Name
+          type: string
+          description: The name of the query template to be used.
+        parameters:
+          title: Parameters
+          type: object
+          description: A dictionary of parameters if a templated query is used.
+          default: {}
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    QueryLog:
+      title: QueryLog
+      type: object
+      properties:
+        query_id:
+          title: Query Id
+          type: string
+          description: A unique ID that identifies the query.
+        statement_type:
+          title: Statement Type
+          type: string
+          description: The query type (ex. SELECT, DELETE, etc).
+        start_time:
+          title: Start Time
+          type: string
+          description: The start time of the query execution.
+          format: date-time
+        end_time:
+          title: End Time
+          type: string
+          description: The end time of the query execution.
+          format: date-time
+        query:
+          title: Query
+          type: string
+          description: The query string that was executed.
+          default: ''
+        referer:
+          title: Referer
+          type: string
+          description: Indicates where the REST API call was made from.
+          default: ''
+        state:
+          title: State
+          type: string
+          description: Shows the state of the query execution (either RUNNING or COMPLETE).
+        destination_table_name:
+          title: Destination Table Name
+          type: string
+          description: Shows the table where the results are stored in (If the statement_type is a SELECT, a new destination_table is created. Otherwise, the destination_table_name shows the affected table).
+        destination_schema:
+          title: Destination Schema
+          type: string
+          description: Shows in which schema the destination_table is stored in.
+        error_result:
+          title: Error Result
+          type: string
+          description: Stores the error message if there was an error while executing the query.
+        created_at:
+          title: Created At
+          type: string
+          description: Shows the timestamp of when the query log was created.
+          format: date-time
+    CreateQueryTemplateRequest:
+      title: CreateQueryTemplateRequest
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        query:
+          title: Query
+          type: string
+          default: ''
     ValidationError:
       title: ValidationError
       required:

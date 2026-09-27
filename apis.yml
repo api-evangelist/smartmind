@@ -55,7 +55,7 @@ modified: '2026-07-21'
 tags:
 - Company
 - Artificial Intelligence
-- Machine-Learning
+- Machine Learning
 - Database
 - Analytics
 - Data
@@ -74,9 +74,10 @@ tags_raw:
 - Ontology
 - RAG
 - Enterprise AI
+- Machine-Learning
 apis:
 - aid: smartmind:smartmind-file-api
-  name: SmartMind file API
+  name: SmartMind File API
   description: The file API from SmartMind — 4 operation(s) for file.
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
@@ -90,7 +91,7 @@ apis:
   - type: APIReference
     url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
 - aid: smartmind:smartmind-health-api
-  name: SmartMind health API
+  name: SmartMind Health API
   description: The health API from SmartMind — 1 operation(s) for health.
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
@@ -104,7 +105,7 @@ apis:
   - type: APIReference
     url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
 - aid: smartmind:smartmind-metric-api
-  name: SmartMind metric API
+  name: SmartMind Metric API
   description: The metric API from SmartMind — 1 operation(s) for metric.
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
@@ -116,7 +117,7 @@ apis:
   - type: APIReference
     url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
 - aid: smartmind:smartmind-query-api
-  name: SmartMind query API
+  name: SmartMind Query API
   description: The query API from SmartMind — 4 operation(s) for query.
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
@@ -130,7 +131,7 @@ apis:
   - type: APIReference
     url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
 - aid: smartmind:smartmind-schema-api
-  name: SmartMind schema API
+  name: SmartMind Schema API
   description: The schema API from SmartMind — 2 operation(s) for schema.
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
@@ -144,7 +145,7 @@ apis:
   - type: APIReference
     url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
 - aid: smartmind:smartmind-table-api
-  name: SmartMind table API
+  name: SmartMind Table API
   description: The table API from SmartMind — 7 operation(s) for table.
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
@@ -158,7 +159,7 @@ apis:
   - type: APIReference
     url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
 - aid: smartmind:smartmind-table-template-api
-  name: SmartMind table_template API
+  name: SmartMind Table Template API
   description: The table_template API from SmartMind — 2 operation(s) for table_template.
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
@@ -171,7 +172,7 @@ apis:
   - type: APIReference
     url: https://github.com/smartmind-team/mintlify-docs/tree/main/api-reference
 - aid: smartmind:smartmind-view-api
-  name: SmartMind view API
+  name: SmartMind View API
   description: The view API from SmartMind — 2 operation(s) for view.
   humanURL: https://thanosql-sdk-python.readthedocs.io/en/latest/
   baseURL: https://thanosql-sdk-python.readthedocs.io/en/latest/

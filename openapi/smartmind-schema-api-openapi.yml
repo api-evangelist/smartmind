@@ -60,15 +60,6 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    Schema:
-      title: Schema
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
     SchemasResponse:
       title: SchemasResponse
       required:
@@ -89,6 +80,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ValidationError'
+    Schema:
+      title: Schema
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
     ValidationError:
       title: ValidationError
       required:
