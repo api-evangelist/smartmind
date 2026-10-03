@@ -246,33 +246,50 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    TableTemplateResponse:
-      title: TableTemplateResponse
+    PrimaryKey:
+      title: PrimaryKey
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        columns:
+          title: Columns
+          type: array
+          items:
+            type: string
+          default: []
+    TableTemplatesWithVersionsResponse:
+      title: TableTemplatesWithVersionsResponse
+      required:
+      - table_templates
+      - versions
+      type: object
+      properties:
+        table_templates:
+          title: Table Templates
+          type: array
+          items:
+            $ref: '#/components/schemas/TableTemplate'
+        versions:
+          title: Versions
+          type: array
+          items:
+            type: string
+    CreateTableTemplateRequest:
+      title: CreateTableTemplateRequest
       required:
       - table_template
       type: object
       properties:
         table_template:
-          $ref: '#/components/schemas/TableTemplate'
-    BaseColumn:
-      title: BaseColumn
-      required:
-      - type
-      - name
-      type: object
-      properties:
-        default:
-          title: Default
+          $ref: '#/components/schemas/BaseTableObjects'
+        version:
+          title: Version
           type: string
-        is_nullable:
-          title: Is Nullable
-          type: boolean
-          default: true
-        type:
-          title: Type
-          type: string
-        name:
-          title: Name
+        compatibility:
+          title: Compatibility
           type: string
     Unique:
       title: Unique
@@ -288,39 +305,6 @@ components:
           items:
             type: string
           default: []
-    TableTemplate:
-      title: TableTemplate
-      required:
-      - name
-      - table_template
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-        table_template:
-          $ref: '#/components/schemas/BaseTableObjects'
-        version:
-          title: Version
-          type: string
-        compatibility:
-          title: Compatibility
-          type: string
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-    TableTemplatesResponse:
-      title: TableTemplatesResponse
-      required:
-      - table_templates
-      type: object
-      properties:
-        table_templates:
-          title: Table Templates
-          type: array
-          items:
-            $ref: '#/components/schemas/TableTemplate'
     Constraints:
       title: Constraints
       type: object
@@ -361,6 +345,25 @@ components:
         column:
           title: Column
           type: string
+    TableTemplateResponse:
+      title: TableTemplateResponse
+      required:
+      - table_template
+      type: object
+      properties:
+        table_template:
+          $ref: '#/components/schemas/TableTemplate'
+    TableTemplatesResponse:
+      title: TableTemplatesResponse
+      required:
+      - table_templates
+      type: object
+      properties:
+        table_templates:
+          title: Table Templates
+          type: array
+          items:
+            $ref: '#/components/schemas/TableTemplate'
     TableTemplateMessageResponse:
       title: TableTemplateMessageResponse
       required:
@@ -374,51 +377,6 @@ components:
         table_template_name:
           title: Table Template Name
           type: string
-    CreateTableTemplateRequest:
-      title: CreateTableTemplateRequest
-      required:
-      - table_template
-      type: object
-      properties:
-        table_template:
-          $ref: '#/components/schemas/BaseTableObjects'
-        version:
-          title: Version
-          type: string
-        compatibility:
-          title: Compatibility
-          type: string
-    TableTemplatesWithVersionsResponse:
-      title: TableTemplatesWithVersionsResponse
-      required:
-      - table_templates
-      - versions
-      type: object
-      properties:
-        table_templates:
-          title: Table Templates
-          type: array
-          items:
-            $ref: '#/components/schemas/TableTemplate'
-        versions:
-          title: Versions
-          type: array
-          items:
-            type: string
-    PrimaryKey:
-      title: PrimaryKey
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          default: ''
-        columns:
-          title: Columns
-          type: array
-          items:
-            type: string
-          default: []
     HTTPValidationError:
       title: HTTPValidationError
       type: object
@@ -428,17 +386,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ValidationError'
-    BaseTableObjects:
-      title: BaseTableObjects
-      type: object
-      properties:
-        columns:
-          title: Columns
-          type: array
-          items:
-            $ref: '#/components/schemas/BaseColumn'
-        constraints:
-          $ref: '#/components/schemas/Constraints'
     ValidationError:
       title: ValidationError
       required:
@@ -460,6 +407,59 @@ components:
         type:
           title: Error Type
           type: string
+    BaseColumn:
+      title: BaseColumn
+      required:
+      - type
+      - name
+      type: object
+      properties:
+        default:
+          title: Default
+          type: string
+        is_nullable:
+          title: Is Nullable
+          type: boolean
+          default: true
+        type:
+          title: Type
+          type: string
+        name:
+          title: Name
+          type: string
+    TableTemplate:
+      title: TableTemplate
+      required:
+      - name
+      - table_template
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        table_template:
+          $ref: '#/components/schemas/BaseTableObjects'
+        version:
+          title: Version
+          type: string
+        compatibility:
+          title: Compatibility
+          type: string
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+    BaseTableObjects:
+      title: BaseTableObjects
+      type: object
+      properties:
+        columns:
+          title: Columns
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseColumn'
+        constraints:
+          $ref: '#/components/schemas/Constraints'
   securitySchemes:
     Bearer_Auth:
       type: apiKey

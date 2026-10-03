@@ -277,15 +277,6 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
     Size:
       title: Size
       type: object
@@ -302,6 +293,42 @@ components:
           title: Avail Size
           type: integer
           default: 0
+    Content:
+      title: Content
+      type: object
+      properties:
+        content_info:
+          title: Content Info
+          allOf:
+          - $ref: '#/components/schemas/ContentInfo'
+          default:
+            name: ''
+            path: ''
+            type: file
+            writable: true
+            created_at: '0001-01-01T00:00:00'
+            updated_at: '0001-01-01T00:00:00'
+        root:
+          title: Root
+          type: string
+          default: /home/jovyan
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    Body_create_fm_api_v1_contents__destination__post:
+      title: Body_create_fm_api_v1_contents__destination__post
+      type: object
+      properties:
+        file:
+          title: File
+          type: string
+          format: binary
     ContentInfo:
       title: ContentInfo
       type: object
@@ -340,33 +367,6 @@ components:
           type: string
           format: date-time
           default: '0001-01-01T00:00:00'
-    Content:
-      title: Content
-      type: object
-      properties:
-        content_info:
-          title: Content Info
-          allOf:
-          - $ref: '#/components/schemas/ContentInfo'
-          default:
-            name: ''
-            path: ''
-            type: file
-            writable: true
-            created_at: '0001-01-01T00:00:00'
-            updated_at: '0001-01-01T00:00:00'
-        root:
-          title: Root
-          type: string
-          default: /home/jovyan
-    Body_create_fm_api_v1_contents__destination__post:
-      title: Body_create_fm_api_v1_contents__destination__post
-      type: object
-      properties:
-        file:
-          title: File
-          type: string
-          format: binary
     ValidationError:
       title: ValidationError
       required:

@@ -214,26 +214,6 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    View:
-      title: View
-      required:
-      - definition
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-        schema:
-          title: Schema
-          type: string
-        columns:
-          title: Columns
-          type: array
-          items:
-            $ref: '#/components/schemas/Column'
-        definition:
-          title: Definition
-          type: string
     ViewResponse:
       title: ViewResponse
       required:
@@ -242,19 +222,6 @@ components:
       properties:
         view:
           $ref: '#/components/schemas/View'
-    ViewMessageResponse:
-      title: ViewMessageResponse
-      required:
-      - message
-      - view_name
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-        view_name:
-          title: View Name
-          type: string
     Column:
       title: Column
       required:
@@ -278,6 +245,19 @@ components:
         name:
           title: Name
           type: string
+    ViewMessageResponse:
+      title: ViewMessageResponse
+      required:
+      - message
+      - view_name
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        view_name:
+          title: View Name
+          type: string
     HTTPValidationError:
       title: HTTPValidationError
       type: object
@@ -287,6 +267,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ValidationError'
+    View:
+      title: View
+      required:
+      - definition
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        schema:
+          title: Schema
+          type: string
+        columns:
+          title: Columns
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        definition:
+          title: Definition
+          type: string
     ValidationError:
       title: ValidationError
       required:
