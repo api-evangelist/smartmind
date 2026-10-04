@@ -246,20 +246,6 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    PrimaryKey:
-      title: PrimaryKey
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          default: ''
-        columns:
-          title: Columns
-          type: array
-          items:
-            type: string
-          default: []
     TableTemplatesWithVersionsResponse:
       title: TableTemplatesWithVersionsResponse
       required:
@@ -277,22 +263,50 @@ components:
           type: array
           items:
             type: string
-    CreateTableTemplateRequest:
-      title: CreateTableTemplateRequest
+    TableTemplateMessageResponse:
+      title: TableTemplateMessageResponse
       required:
-      - table_template
+      - message
+      - table_template_name
       type: object
       properties:
-        table_template:
-          $ref: '#/components/schemas/BaseTableObjects'
-        version:
-          title: Version
+        message:
+          title: Message
           type: string
-        compatibility:
-          title: Compatibility
+        table_template_name:
+          title: Table Template Name
           type: string
-    Unique:
-      title: Unique
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    BaseColumn:
+      title: BaseColumn
+      required:
+      - type
+      - name
+      type: object
+      properties:
+        default:
+          title: Default
+          type: string
+        is_nullable:
+          title: Is Nullable
+          type: boolean
+          default: true
+        type:
+          title: Type
+          type: string
+        name:
+          title: Name
+          type: string
+    PrimaryKey:
+      title: PrimaryKey
       type: object
       properties:
         name:
@@ -321,38 +335,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ForeignKey'
-    ForeignKey:
-      title: ForeignKey
-      required:
-      - reference_column
-      - reference_table
-      - column
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-        reference_schema:
-          title: Reference Schema
-          type: string
-          default: public
-        reference_column:
-          title: Reference Column
-          type: string
-        reference_table:
-          title: Reference Table
-          type: string
-        column:
-          title: Column
-          type: string
-    TableTemplateResponse:
-      title: TableTemplateResponse
-      required:
-      - table_template
-      type: object
-      properties:
-        table_template:
-          $ref: '#/components/schemas/TableTemplate'
     TableTemplatesResponse:
       title: TableTemplatesResponse
       required:
@@ -364,69 +346,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TableTemplate'
-    TableTemplateMessageResponse:
-      title: TableTemplateMessageResponse
-      required:
-      - message
-      - table_template_name
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-        table_template_name:
-          title: Table Template Name
-          type: string
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-    ValidationError:
-      title: ValidationError
-      required:
-      - loc
-      - msg
-      - type
-      type: object
-      properties:
-        loc:
-          title: Location
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-    BaseColumn:
-      title: BaseColumn
-      required:
-      - type
-      - name
-      type: object
-      properties:
-        default:
-          title: Default
-          type: string
-        is_nullable:
-          title: Is Nullable
-          type: boolean
-          default: true
-        type:
-          title: Type
-          type: string
-        name:
-          title: Name
-          type: string
     TableTemplate:
       title: TableTemplate
       required:
@@ -460,6 +379,87 @@ components:
             $ref: '#/components/schemas/BaseColumn'
         constraints:
           $ref: '#/components/schemas/Constraints'
+    CreateTableTemplateRequest:
+      title: CreateTableTemplateRequest
+      required:
+      - table_template
+      type: object
+      properties:
+        table_template:
+          $ref: '#/components/schemas/BaseTableObjects'
+        version:
+          title: Version
+          type: string
+        compatibility:
+          title: Compatibility
+          type: string
+    TableTemplateResponse:
+      title: TableTemplateResponse
+      required:
+      - table_template
+      type: object
+      properties:
+        table_template:
+          $ref: '#/components/schemas/TableTemplate'
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    Unique:
+      title: Unique
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        columns:
+          title: Columns
+          type: array
+          items:
+            type: string
+          default: []
+    ForeignKey:
+      title: ForeignKey
+      required:
+      - reference_column
+      - reference_table
+      - column
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        reference_schema:
+          title: Reference Schema
+          type: string
+          default: public
+        reference_column:
+          title: Reference Column
+          type: string
+        reference_table:
+          title: Reference Table
+          type: string
+        column:
+          title: Column
+          type: string
   securitySchemes:
     Bearer_Auth:
       type: apiKey

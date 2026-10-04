@@ -214,14 +214,28 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    ViewResponse:
-      title: ViewResponse
+    ViewMessageResponse:
+      title: ViewMessageResponse
       required:
-      - view
+      - message
+      - view_name
       type: object
       properties:
-        view:
-          $ref: '#/components/schemas/View'
+        message:
+          title: Message
+          type: string
+        view_name:
+          title: View Name
+          type: string
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
     Column:
       title: Column
       required:
@@ -245,28 +259,14 @@ components:
         name:
           title: Name
           type: string
-    ViewMessageResponse:
-      title: ViewMessageResponse
+    ViewResponse:
+      title: ViewResponse
       required:
-      - message
-      - view_name
+      - view
       type: object
       properties:
-        message:
-          title: Message
-          type: string
-        view_name:
-          title: View Name
-          type: string
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
+        view:
+          $ref: '#/components/schemas/View'
     View:
       title: View
       required:

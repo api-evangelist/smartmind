@@ -60,26 +60,6 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    SchemasResponse:
-      title: SchemasResponse
-      required:
-      - schemas
-      type: object
-      properties:
-        schemas:
-          title: Schemas
-          type: array
-          items:
-            $ref: '#/components/schemas/Schema'
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
     Schema:
       title: Schema
       required:
@@ -110,6 +90,26 @@ components:
         type:
           title: Error Type
           type: string
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    SchemasResponse:
+      title: SchemasResponse
+      required:
+      - schemas
+      type: object
+      properties:
+        schemas:
+          title: Schemas
+          type: array
+          items:
+            $ref: '#/components/schemas/Schema'
   securitySchemes:
     Bearer_Auth:
       type: apiKey

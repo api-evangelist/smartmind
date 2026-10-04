@@ -916,6 +916,82 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
+    TableMessageResponse:
+      title: TableMessageResponse
+      required:
+      - message
+      - table_name
+      - schema
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        table_name:
+          title: Table Name
+          type: string
+        schema:
+          title: Schema
+          type: string
+    BaseColumn:
+      title: BaseColumn
+      required:
+      - type
+      - name
+      type: object
+      properties:
+        default:
+          title: Default
+          type: string
+        is_nullable:
+          title: Is Nullable
+          type: boolean
+          default: true
+        type:
+          title: Type
+          type: string
+        name:
+          title: Name
+          type: string
+    CreateTableWithFileRequest:
+      title: CreateTableWithFileRequest
+      required:
+      - table
+      type: object
+      properties:
+        table:
+          $ref: '#/components/schemas/BaseTableObjects'
+    BaseTableObjects:
+      title: BaseTableObjects
+      type: object
+      properties:
+        columns:
+          title: Columns
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseColumn'
+        constraints:
+          $ref: '#/components/schemas/Constraints'
+    CreateTableWithJSON:
+      title: CreateTableWithJSON
+      type: object
+      properties:
+        table:
+          $ref: '#/components/schemas/BaseTableObjects'
+        data:
+          title: Data
+          type: array
+          items:
+            type: object
+          default: []
+    TableResponse:
+      title: TableResponse
+      required:
+      - table
+      type: object
+      properties:
+        table:
+          $ref: '#/components/schemas/Table'
     Table:
       title: Table
       type: object
@@ -933,32 +1009,18 @@ components:
             $ref: '#/components/schemas/Column'
         constraints:
           $ref: '#/components/schemas/Constraints'
-    TableRecordsResponse:
-      title: TableRecordsResponse
+    Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post:
+      title: Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post
       required:
-      - total
+      - file
       type: object
       properties:
-        records:
-          title: Records
-          type: array
-          items:
-            type: object
-        total:
-          title: Total
-          type: integer
-    CreateTableWithJSON:
-      title: CreateTableWithJSON
-      type: object
-      properties:
-        table:
-          $ref: '#/components/schemas/BaseTableObjects'
-        data:
-          title: Data
-          type: array
-          items:
-            type: object
-          default: []
+        file:
+          title: File
+          type: string
+          format: binary
+        body:
+          $ref: '#/components/schemas/CreateTableWithFileRequest'
     ValidationError:
       title: ValidationError
       required:
@@ -980,128 +1042,28 @@ components:
         type:
           title: Error Type
           type: string
-    Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post:
-      title: Body_upload_table_from_excel_api_v1_table__table_name__upload_excel_post
-      required:
-      - file
-      type: object
-      properties:
-        file:
-          title: File
-          type: string
-          format: binary
-        body:
-          $ref: '#/components/schemas/CreateTableWithFileRequest'
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-    CreateTableWithFileRequest:
-      title: CreateTableWithFileRequest
+    CreateTableRequest:
+      title: CreateTableRequest
       required:
       - table
       type: object
       properties:
         table:
           $ref: '#/components/schemas/BaseTableObjects'
-    TableMessageResponse:
-      title: TableMessageResponse
+    TableRecordsResponse:
+      title: TableRecordsResponse
       required:
-      - message
-      - table_name
-      - schema
+      - total
       type: object
       properties:
-        message:
-          title: Message
-          type: string
-        table_name:
-          title: Table Name
-          type: string
-        schema:
-          title: Schema
-          type: string
-    BaseTableObjects:
-      title: BaseTableObjects
-      type: object
-      properties:
-        columns:
-          title: Columns
+        records:
+          title: Records
           type: array
           items:
-            $ref: '#/components/schemas/BaseColumn'
-        constraints:
-          $ref: '#/components/schemas/Constraints'
-    PrimaryKey:
-      title: PrimaryKey
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          default: ''
-        columns:
-          title: Columns
-          type: array
-          items:
-            type: string
-          default: []
-    Column:
-      title: Column
-      required:
-      - type
-      - name
-      type: object
-      properties:
-        id:
-          title: Id
+            type: object
+        total:
+          title: Total
           type: integer
-        default:
-          title: Default
-          type: string
-        is_nullable:
-          title: Is Nullable
-          type: boolean
-          default: true
-        type:
-          title: Type
-          type: string
-        name:
-          title: Name
-          type: string
-    AlterTableRequest:
-      title: AlterTableRequest
-      required:
-      - table
-      type: object
-      properties:
-        table:
-          $ref: '#/components/schemas/Table'
-    BaseColumn:
-      title: BaseColumn
-      required:
-      - type
-      - name
-      type: object
-      properties:
-        default:
-          title: Default
-          type: string
-        is_nullable:
-          title: Is Nullable
-          type: boolean
-          default: true
-        type:
-          title: Type
-          type: string
-        name:
-          title: Name
-          type: string
     Body_upload_table_from_csv_api_v1_table__table_name__upload_csv_post:
       title: Body_upload_table_from_csv_api_v1_table__table_name__upload_csv_post
       required:
@@ -1114,36 +1076,6 @@ components:
           format: binary
         body:
           $ref: '#/components/schemas/CreateTableWithFileRequest'
-    CreateTableRequest:
-      title: CreateTableRequest
-      required:
-      - table
-      type: object
-      properties:
-        table:
-          $ref: '#/components/schemas/BaseTableObjects'
-    TableResponse:
-      title: TableResponse
-      required:
-      - table
-      type: object
-      properties:
-        table:
-          $ref: '#/components/schemas/Table'
-    Unique:
-      title: Unique
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          default: ''
-        columns:
-          title: Columns
-          type: array
-          items:
-            type: string
-          default: []
     ForeignKey:
       title: ForeignKey
       required:
@@ -1168,6 +1100,52 @@ components:
         column:
           title: Column
           type: string
+    Column:
+      title: Column
+      required:
+      - type
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        default:
+          title: Default
+          type: string
+        is_nullable:
+          title: Is Nullable
+          type: boolean
+          default: true
+        type:
+          title: Type
+          type: string
+        name:
+          title: Name
+          type: string
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    PrimaryKey:
+      title: PrimaryKey
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        columns:
+          title: Columns
+          type: array
+          items:
+            type: string
+          default: []
     Constraints:
       title: Constraints
       type: object
@@ -1184,6 +1162,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ForeignKey'
+    Unique:
+      title: Unique
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        columns:
+          title: Columns
+          type: array
+          items:
+            type: string
+          default: []
+    AlterTableRequest:
+      title: AlterTableRequest
+      required:
+      - table
+      type: object
+      properties:
+        table:
+          $ref: '#/components/schemas/Table'
   securitySchemes:
     Bearer_Auth:
       type: apiKey
