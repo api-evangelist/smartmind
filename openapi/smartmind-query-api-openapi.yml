@@ -441,131 +441,6 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    QueryTemplate:
-      title: QueryTemplate
-      required:
-      - name
-      - query
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        name:
-          title: Name
-          type: string
-        query:
-          title: Query
-          type: string
-        parameters:
-          title: Parameters
-          type: array
-          items:
-            type: string
-          default: []
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        updated_at:
-          title: Updated At
-          type: string
-          format: date-time
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-    UpdateQueryTemplateRequest:
-      title: UpdateQueryTemplateRequest
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-        query:
-          title: Query
-          type: string
-    QueryTemplatesResponse:
-      title: QueryTemplatesResponse
-      required:
-      - query_templates
-      type: object
-      properties:
-        query_templates:
-          title: Query Templates
-          type: array
-          items:
-            $ref: '#/components/schemas/QueryTemplate'
-    QueryTemplateMessageResponse:
-      title: QueryTemplateMessageResponse
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-    QueryTemplateResponse:
-      title: QueryTemplateResponse
-      required:
-      - query_template
-      type: object
-      properties:
-        query_template:
-          $ref: '#/components/schemas/QueryTemplate'
-    CreateQueryTemplateRequest:
-      title: CreateQueryTemplateRequest
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          default: ''
-        query:
-          title: Query
-          type: string
-          default: ''
-    QueryContext:
-      title: QueryContext
-      type: object
-      properties:
-        query_string:
-          title: Query String
-          type: string
-          description: The query string to be executed. Can either be a complete or templated query.
-        template_id:
-          title: Template Id
-          type: integer
-          description: The ID of the query template to be used.
-        template_name:
-          title: Template Name
-          type: string
-          description: The name of the query template to be used.
-        parameters:
-          title: Parameters
-          type: object
-          description: A dictionary of parameters if a templated query is used.
-          default: {}
-    PaginatedQueryLogResponse:
-      title: PaginatedQueryLogResponse
-      required:
-      - query_logs
-      - total
-      type: object
-      properties:
-        query_logs:
-          title: Query Logs
-          type: array
-          items:
-            $ref: '#/components/schemas/QueryLog'
-        total:
-          title: Total
-          type: integer
     QueryLog:
       title: QueryLog
       type: object
@@ -619,27 +494,24 @@ components:
           type: string
           description: Shows the timestamp of when the query log was created.
           format: date-time
-    ValidationError:
-      title: ValidationError
-      required:
-      - loc
-      - msg
-      - type
+    UpdateQueryTemplateRequest:
+      title: UpdateQueryTemplateRequest
       type: object
       properties:
-        loc:
-          title: Location
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-        msg:
-          title: Message
+        name:
+          title: Name
           type: string
-        type:
-          title: Error Type
+        query:
+          title: Query
           type: string
+    QueryTemplateResponse:
+      title: QueryTemplateResponse
+      required:
+      - query_template
+      type: object
+      properties:
+        query_template:
+          $ref: '#/components/schemas/QueryTemplate'
     QueryLogResponse:
       title: QueryLogResponse
       type: object
@@ -709,6 +581,134 @@ components:
           title: Affected Records
           type: integer
           description: The number of records that are affected by DML or DDL queries.
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    QueryTemplateMessageResponse:
+      title: QueryTemplateMessageResponse
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+    QueryTemplatesResponse:
+      title: QueryTemplatesResponse
+      required:
+      - query_templates
+      type: object
+      properties:
+        query_templates:
+          title: Query Templates
+          type: array
+          items:
+            $ref: '#/components/schemas/QueryTemplate'
+    QueryTemplate:
+      title: QueryTemplate
+      required:
+      - name
+      - query
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        query:
+          title: Query
+          type: string
+        parameters:
+          title: Parameters
+          type: array
+          items:
+            type: string
+          default: []
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+    QueryContext:
+      title: QueryContext
+      type: object
+      properties:
+        query_string:
+          title: Query String
+          type: string
+          description: The query string to be executed. Can either be a complete or templated query.
+        template_id:
+          title: Template Id
+          type: integer
+          description: The ID of the query template to be used.
+        template_name:
+          title: Template Name
+          type: string
+          description: The name of the query template to be used.
+        parameters:
+          title: Parameters
+          type: object
+          description: A dictionary of parameters if a templated query is used.
+          default: {}
+    PaginatedQueryLogResponse:
+      title: PaginatedQueryLogResponse
+      required:
+      - query_logs
+      - total
+      type: object
+      properties:
+        query_logs:
+          title: Query Logs
+          type: array
+          items:
+            $ref: '#/components/schemas/QueryLog'
+        total:
+          title: Total
+          type: integer
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    CreateQueryTemplateRequest:
+      title: CreateQueryTemplateRequest
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: ''
+        query:
+          title: Query
+          type: string
+          default: ''
   securitySchemes:
     Bearer_Auth:
       type: apiKey

@@ -214,28 +214,34 @@ paths:
       - Bearer Auth: []
 components:
   schemas:
-    ViewMessageResponse:
-      title: ViewMessageResponse
+    View:
+      title: View
       required:
-      - message
-      - view_name
+      - definition
       type: object
       properties:
-        message:
-          title: Message
+        name:
+          title: Name
           type: string
-        view_name:
-          title: View Name
+        schema:
+          title: Schema
           type: string
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
+        columns:
+          title: Columns
           type: array
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/Column'
+        definition:
+          title: Definition
+          type: string
+    ViewResponse:
+      title: ViewResponse
+      required:
+      - view
+      type: object
+      properties:
+        view:
+          $ref: '#/components/schemas/View'
     Column:
       title: Column
       required:
@@ -259,33 +265,27 @@ components:
         name:
           title: Name
           type: string
-    ViewResponse:
-      title: ViewResponse
-      required:
-      - view
+    HTTPValidationError:
+      title: HTTPValidationError
       type: object
       properties:
-        view:
-          $ref: '#/components/schemas/View'
-    View:
-      title: View
-      required:
-      - definition
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-        schema:
-          title: Schema
-          type: string
-        columns:
-          title: Columns
+        detail:
+          title: Detail
           type: array
           items:
-            $ref: '#/components/schemas/Column'
-        definition:
-          title: Definition
+            $ref: '#/components/schemas/ValidationError'
+    ViewMessageResponse:
+      title: ViewMessageResponse
+      required:
+      - message
+      - view_name
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        view_name:
+          title: View Name
           type: string
     ValidationError:
       title: ValidationError
